@@ -7,7 +7,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
-      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
       background-color: #f4f7f6;
       display: flex;
       justify-content: center;
@@ -57,37 +57,88 @@
       text-align: center;
       line-height: 1.3;
     }
+    .diff-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .diff-title {
+      font-size: 16px;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px 16px;
+      border-radius: 20px;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 340px;
+    }
+    .diff-btn {
+      background: #ffffff;
+      color: #0369a1;
+      border: 3px solid transparent;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: all 0.1s;
+    }
+    .diff-btn.active {
+      background: #facc15;
+      color: #713f12;
+      border-color: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
     .btn-go {
       background: #facc15;
       color: #713f12;
-      font-size: 52px;
+      font-size: 48px;
       font-weight: 900;
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       border: 6px solid #fff;
       box-shadow: 0 8px 0 #ca8a04;
       cursor: pointer;
+      opacity: 0.5;
+      pointer-events: none;
+      transition: all 0.2s;
+    }
+    .btn-go.ready {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .btn-go:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #ca8a04;
     }
     #quiz-screen {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px;
+      justify-content: flex-start;
+      padding: 12px 16px 20px;
+      gap: 8px;
     }
     .flag-card {
       width: 100%;
-      flex: 1;
-      max-height: 190px;
+      height: 170px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #f8fafc;
       border: 3px solid #e2e8f0;
       border-radius: 12px;
-      padding: 8px;
+      padding: 6px;
     }
     .flag-card img {
       max-width: 100%;
@@ -95,40 +146,36 @@
       object-fit: contain;
     }
     .symbol-box {
-      font-size: 80px;
-      height: 90px;
+      font-size: 64px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .english-box {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: #1e3a8a;
       background: #e0f2fe;
       border: 2px solid #bae6fd;
-      padding: 6px 16px;
+      padding: 4px 14px;
       border-radius: 30px;
       text-align: center;
-    }
-    .status-box {
-      font-size: 16px;
-      font-weight: bold;
-      color: #475569;
-      height: 28px;
+      min-height: 32px;
     }
     .button-group {
       width: 100%;
       display: flex;
       gap: 16px;
-      margin: 6px 0;
+      margin-top: 10px;
+      margin-bottom: 6px;
     }
     .btn-ans {
       flex: 1;
-      height: 110px;
+      height: 120px;
       border: none;
       border-radius: 20px;
-      font-size: 68px;
+      font-size: 72px;
       font-weight: bold;
       color: white;
       cursor: pointer;
@@ -137,9 +184,24 @@
       background: #22c55e;
       box-shadow: 0 8px 0 #15803d;
     }
+    .btn-maru:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #15803d;
+    }
     .btn-batsu {
       background: #ef4444;
       box-shadow: 0 8px 0 #b91c1c;
+    }
+    .btn-batsu:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #b91c1c;
+    }
+    .status-box {
+      font-size: 16px;
+      font-weight: bold;
+      color: #475569;
+      height: 24px;
+      margin-top: 4px;
     }
     #line-notice {
       display: none;
@@ -169,18 +231,31 @@
 
   <div id="start-screen">
     <h1 class="cover-title">せかいの こっき<br>＆ しゅと クイズ</h1>
-    <button class="btn-go" onclick="startGame()">GO</button>
+    
+    <div class="diff-container">
+      <div class="diff-title">むずかしさを えらんでね</div>
+      <div class="diff-grid">
+        <button class="diff-btn" onclick="selectDifficulty('easy', this)">かんたん</button>
+        <button class="diff-btn" onclick="selectDifficulty('normal', this)">ふつう</button>
+        <button class="diff-btn" onclick="selectDifficulty('hard', this)">むずかしい</button>
+        <button class="diff-btn" onclick="selectDifficulty('expert', this)">ちょう難問</button>
+      </div>
+    </div>
+
+    <button id="go-btn" class="btn-go" onclick="startGame()">GO</button>
   </div>
 
   <div id="quiz-screen">
     <div class="flag-card"><img id="flag-img" src="" alt="国旗"></div>
     <div class="symbol-box" id="symbol-emoji">🌸</div>
     <div class="english-box" id="english-text">Japan / Tokyo</div>
-    <div class="status-box" id="status-text">🔊 よくきいてね！</div>
+
     <div class="button-group">
       <button class="btn-ans btn-maru" onclick="checkAnswer(true)">〇</button>
       <button class="btn-ans btn-batsu" onclick="checkAnswer(false)">✕</button>
     </div>
+
+    <div class="status-box" id="status-text">🔊 よくきいてね！</div>
   </div>
 </div>
 
@@ -189,36 +264,95 @@ if (navigator.userAgent.indexOf('LINE') !== -1) {
   document.getElementById('line-notice').style.display = 'block';
 }
 
-const countries = [
-  { code: "jp", country: "日本", capital: "東京", enText: "Japan / Tokyo", emoji: "🌸" },
-  { code: "us", country: "アメリカ", capital: "ワシントン", enText: "USA / Washington", emoji: "🗽" },
-  { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼" },
-  { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑" },
-  { code: "de", country: "ドイツ", capital: "ベルリン", enText: "Germany / Berlin", emoji: "🏰" },
-  { code: "it", country: "イタリア", capital: "ローマ", enText: "Italy / Rome", emoji: "🍕" },
-  { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼" },
-  { code: "kr", country: "韓国", capital: "ソウル", enText: "South Korea / Seoul", emoji: "🍱" },
-  { code: "ca", country: "カナダ", capital: "オタワ", enText: "Canada / Ottawa", emoji: "🍁" },
-  { code: "au", country: "オーストラリア", capital: "キャンベラ", enText: "Australia / Canberra", emoji: "🐨" },
-  { code: "br", country: "ブラジル", capital: "ブラジリア", enText: "Brazil / Brasilia", emoji: "⚽" },
-  { code: "eg", country: "エジプト", capital: "カイロ", enText: "Egypt / Cairo", emoji: "🐪" },
-  { code: "in", country: "インド", capital: "ニューデリー", enText: "India / New Delhi", emoji: "🐘" },
-  { code: "es", country: "スペイン", capital: "マドリード", enText: "Spain / Madrid", emoji: "💃" },
-  { code: "sg", country: "シンガポール", capital: "シンガポール", enText: "Singapore / Singapore", emoji: "🦁" },
-  { code: "th", country: "タイ", capital: "バンコク", enText: "Thailand / Bangkok", emoji: "🐘" },
-  { code: "vn", country: "ベトナム", capital: "ハノイ", enText: "Vietnam / Hanoi", emoji: "🍜" },
-  { code: "mx", country: "メキシコ", capital: "メキシコシティ", enText: "Mexico / Mexico City", emoji: "🌮" },
-  { code: "ru", country: "ロシア", capital: "モスクワ", enText: "Russia / Moscow", emoji: "🪆" },
-  { code: "za", country: "南アフリカ", capital: "プレトリア", enText: "South Africa / Pretoria", emoji: "🦁" }
+const allCountries = [
+  // かんたん (10カ国)
+  { code: "jp", country: "日本", capital: "東京", enText: "Japan / Tokyo", emoji: "🌸", level: 1 },
+  { code: "us", country: "アメリカ", capital: "ワシントン", enText: "USA / Washington", emoji: "🗽", level: 1 },
+  { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑", level: 1 },
+  { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼", level: 1 },
+  { code: "de", country: "ドイツ", capital: "ベルリン", enText: "Germany / Berlin", emoji: "🏰", level: 1 },
+  { code: "it", country: "イタリア", capital: "ローマ", enText: "Italy / Rome", emoji: "🍕", level: 1 },
+  { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼", level: 1 },
+  { code: "kr", country: "韓国", capital: "ソウル", enText: "South Korea / Seoul", emoji: "🍱", level: 1 },
+  { code: "ca", country: "カナダ", capital: "オタワ", enText: "Canada / Ottawa", emoji: "🍁", level: 1 },
+  { code: "au", country: "オーストラリア", capital: "キャンベラ", enText: "Australia / Canberra", emoji: "🐨", level: 1 },
+
+  // ふつう (追加10カ国)
+  { code: "br", country: "ブラジル", capital: "ブラジリア", enText: "Brazil / Brasilia", emoji: "⚽", level: 2 },
+  { code: "eg", country: "エジプト", capital: "カイロ", enText: "Egypt / Cairo", emoji: "🐪", level: 2 },
+  { code: "in", country: "インド", capital: "ニューデリー", enText: "India / New Delhi", emoji: "🐘", level: 2 },
+  { code: "es", country: "スペイン", capital: "マドリード", enText: "Spain / Madrid", emoji: "💃", level: 2 },
+  { code: "sg", country: "シンガポール", capital: "シンガポール", enText: "Singapore / Singapore", emoji: "🦁", level: 2 },
+  { code: "th", country: "タイ", capital: "バンコク", enText: "Thailand / Bangkok", emoji: "🐘", level: 2 },
+  { code: "vn", country: "ベトナム", capital: "ハノイ", enText: "Vietnam / Hanoi", emoji: "🍜", level: 2 },
+  { code: "mx", country: "メキシコ", capital: "メキシコシティ", enText: "Mexico / Mexico City", emoji: "🌮", level: 2 },
+  { code: "ru", country: "ロシア", capital: "モスクワ", enText: "Russia / Moscow", emoji: "🪆", level: 2 },
+  { code: "ar", country: "アルゼンチン", capital: "ブエノスアイレス", enText: "Argentina / Buenos Aires", emoji: "🥩", level: 2 },
+
+  // むずかしい (追加10カ国)
+  { code: "za", country: "南アフリカ", capital: "プレトリア", enText: "South Africa / Pretoria", emoji: "🦁", level: 3 },
+  { code: "nl", country: "オランダ", capital: "アムステルダム", enText: "Netherlands / Amsterdam", emoji: "🌷", level: 3 },
+  { code: "ch", country: "スイス", capital: "ベルン", enText: "Switzerland / Bern", emoji: "🧀", level: 3 },
+  { code: "se", country: "スウェーデン", capital: "ストックホルム", enText: "Sweden / Stockholm", emoji: "🌲", level: 3 },
+  { code: "gr", country: "ギリシャ", capital: "アテネ", enText: "Greece / Athens", emoji: "🏛️", level: 3 },
+  { code: "tr", country: "トルコ", capital: "アンカラ", enText: "Turkey / Ankara", emoji: "🥙", level: 3 },
+  { code: "nz", country: "ニュージーランド", capital: "ウェリントン", enText: "New Zealand / Wellington", emoji: "🥝", level: 3 },
+  { code: "ph", country: "フィリピン", capital: "マニラ", enText: "Philippines / Manila", emoji: "🥭", level: 3 },
+  { code: "id", country: "インドネシア", capital: "ジャカルタ", enText: "Indonesia / Jakarta", emoji: "🏝️", level: 3 },
+  { code: "pe", country: "ペルー", capital: "リマ", enText: "Peru / Lima", emoji: "🦙", level: 3 },
+
+  // ちょう難問 (追加10カ国)
+  { code: "mn", country: "モンゴル", capital: "ウランバートル", enText: "Mongolia / Ulaanbaatar", emoji: "🐎", level: 4 },
+  { code: "ke", country: "ケニア", capital: "ナイロビ", enText: "Kenya / Nairobi", emoji: "🦒", level: 4 },
+  { code: "fi", country: "フィンランド", capital: "ヘルシンキ", enText: "Finland / Helsinki", emoji: "🎅", level: 4 },
+  { code: "pl", country: "ポーランド", capital: "ワルシャワ", enText: "Poland / Warsaw", emoji: "🥟", level: 4 },
+  { code: "pt", country: "ポルトガル", capital: "リスボン", enText: "Portugal / Lisbon", emoji: "⛵", level: 4 },
+  { code: "cl", country: "チリ", capital: "サンティアゴ", enText: "Chile / Santiago", emoji: "🏔️", level: 4 },
+  { code: "co", country: "コロンビア", capital: "ボゴタ", enText: "Colombia / Bogota", emoji: "☕", level: 4 },
+  { code: "my", country: "マレーシア", capital: "クアラルンプール", enText: "Malaysia / Kuala Lumpur", emoji: "🏙️", level: 4 },
+  { code: "sa", country: "サウジアラビア", capital: "リヤド", enText: "Saudi Arabia / Riyadh", emoji: "🌴", level: 4 },
+  { code: "is", country: "アイスランド", capital: "レイキャビク", enText: "Iceland / Reykjavik", emoji: "🌋", level: 4 }
 ];
 
-let recentFlagHistory = [];
-let recentSpeechHistory = [];
+let selectedLevel = null;
+let currentCountries = [];
+let lastCountryCode = null;
 let consecutiveCount = 0;
 let lastTypeIsCorrect = null;
 let currentQuestion = null;
 let isAnswerable = false;
 let audioCtx = null;
+
+function selectDifficulty(diff, btn) {
+  selectedLevel = diff;
+  localStorage.setItem('quiz_kokki_diff', diff);
+
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const goBtn = document.getElementById('go-btn');
+  goBtn.classList.add('ready');
+
+  let maxLevel = 1;
+  if (diff === 'easy') maxLevel = 1;
+  else if (diff === 'normal') maxLevel = 2;
+  else if (diff === 'hard') maxLevel = 3;
+  else if (diff === 'expert') maxLevel = 4;
+
+  currentCountries = allCountries.filter(c => c.level <= maxLevel);
+}
+
+// 保存された難易度の復元
+window.onload = function() {
+  const saved = localStorage.getItem('quiz_kokki_diff');
+  if (saved) {
+    const btns = document.querySelectorAll('.diff-btn');
+    const map = { 'easy': 0, 'normal': 1, 'hard': 2, 'expert': 3 };
+    if (btns[map[saved]]) {
+      selectDifficulty(saved, btns[map[saved]]);
+    }
+  }
+};
 
 function playSound(type) {
   try {
@@ -250,6 +384,7 @@ function playSound(type) {
 }
 
 function startGame() {
+  if (!selectedLevel) return;
   document.getElementById('start-screen').style.display = 'none';
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -257,26 +392,19 @@ function startGame() {
 }
 
 function getRandomFlagCountry() {
-  let available = countries.filter(c => !recentFlagHistory.includes(c.code));
-  if (available.length === 0) available = countries;
+  let available = currentCountries.filter(c => c.code !== lastCountryCode);
+  if (available.length === 0) available = currentCountries;
   const selected = available[Math.floor(Math.random() * available.length)];
-  recentFlagHistory.push(selected.code);
-  if (recentFlagHistory.length > 10) recentFlagHistory.shift();
+  lastCountryCode = selected.code;
   return selected;
 }
 
 function getRandomSpeechCountry(targetCode, isCorrectPair) {
   if (isCorrectPair) {
-    recentSpeechHistory.push(targetCode);
-    if (recentSpeechHistory.length > 10) recentSpeechHistory.shift();
-    return countries.find(c => c.code === targetCode);
+    return currentCountries.find(c => c.code === targetCode);
   } else {
-    let available = countries.filter(c => c.code !== targetCode && !recentSpeechHistory.includes(c.code));
-    if (available.length === 0) available = countries.filter(c => c.code !== targetCode);
-    const selected = available[Math.floor(Math.random() * available.length)];
-    recentSpeechHistory.push(selected.code);
-    if (recentSpeechHistory.length > 10) recentSpeechHistory.shift();
-    return selected;
+    let available = currentCountries.filter(c => c.code !== targetCode);
+    return available[Math.floor(Math.random() * available.length)];
   }
 }
 
