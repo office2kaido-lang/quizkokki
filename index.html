@@ -180,11 +180,15 @@
       color: white;
       cursor: pointer;
     }
+    .btn-ans:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
     .btn-maru {
       background: #22c55e;
       box-shadow: 0 8px 0 #15803d;
     }
-    .btn-maru:active {
+    .btn-maru:not(:disabled):active {
       transform: translateY(4px);
       box-shadow: 0 4px 0 #15803d;
     }
@@ -192,7 +196,7 @@
       background: #ef4444;
       box-shadow: 0 8px 0 #b91c1c;
     }
-    .btn-batsu:active {
+    .btn-batsu:not(:disabled):active {
       transform: translateY(4px);
       box-shadow: 0 4px 0 #b91c1c;
     }
@@ -251,8 +255,8 @@
     <div class="english-box" id="english-text">Japan / Tokyo</div>
 
     <div class="button-group">
-      <button class="btn-ans btn-maru" onclick="checkAnswer(true)">〇</button>
-      <button class="btn-ans btn-batsu" onclick="checkAnswer(false)">✕</button>
+      <button id="btn-maru" class="btn-ans btn-maru" onclick="checkAnswer(true)">〇</button>
+      <button id="btn-batsu" class="btn-ans btn-batsu" onclick="checkAnswer(false)">✕</button>
     </div>
 
     <div class="status-box" id="status-text">🔊 よくきいてね！</div>
@@ -268,8 +272,8 @@ const allCountries = [
   // かんたん (10カ国)
   { code: "jp", country: "日本", capital: "東京", enText: "Japan / Tokyo", emoji: "🌸", level: 1 },
   { code: "us", country: "アメリカ", capital: "ワシントン", enText: "USA / Washington", emoji: "🗽", level: 1 },
-  { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼", level: 1 },
   { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑", level: 1 },
+  { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼", level: 1 },
   { code: "de", country: "ドイツ", capital: "ベルリン", enText: "Germany / Berlin", emoji: "🏰", level: 1 },
   { code: "it", country: "イタリア", capital: "ローマ", enText: "Italy / Rome", emoji: "🍕", level: 1 },
   { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼", level: 1 },
@@ -291,7 +295,7 @@ const allCountries = [
 
   // むずかしい (追加10カ国)
   { code: "za", country: "南アフリカ", capital: "プレトリア", enText: "South Africa / Pretoria", emoji: "🦁", level: 3 },
-  { code: "nl", country: "オランダ", capital: "アムステルダム", enText: "Netherlands / Amsterdam", emoji: "🌷", level: 3 },
+  { code: "nl", country: "オランダ", capital: "アム Amsterdam", enText: "Netherlands / Amsterdam", emoji: "🌷", level: 3 },
   { code: "ch", country: "スイス", capital: "ベルン", enText: "Switzerland / Bern", emoji: "🧀", level: 3 },
   { code: "se", country: "スウェーデン", capital: "ストックホルム", enText: "Sweden / Stockholm", emoji: "🌲", level: 3 },
   { code: "gr", country: "ギリシャ", capital: "アテネ", enText: "Greece / Athens", emoji: "🏛️", level: 3 },
@@ -316,21 +320,37 @@ const allCountries = [
 
 let selectedLevel = null;
 let currentCountries = [];
-let lastCountryCode = null;
+// 重複防止用の履歴（最大3件保持）
+let countryHistory = []; 
 let consecutiveCount = 0;
 let lastTypeIsCorrect = null;
 let currentQuestion = null;
 let isAnswerable = false;
 let audioCtx = null;
 
+const mapBtns = document.querySelectorAll('.diff-btn');
+const goBtn = document.getElementById('go-btn');
+const flagImg = document.getElementById('flag-img');
+const symbolEmoji = document.getElementById('symbol-emoji');
+const englishText = document.getElementById('english-text');
+const statusText = document.getElementById('status-text');
+const maruBtn = document.getElementById('btn-maru');
+const batsuBtn = document.getElementById('btn-batsu');
+
+// 解答ボタンの状態を切り替える関数
+function setButtonsEnabled(enabled) {
+  isAnswerable = enabled;
+  maruBtn.disabled = !enabled;
+  batsuBtn.disabled = !enabled;
+}
+
 function selectDifficulty(diff, btn) {
   selectedLevel = diff;
   localStorage.setItem('quiz_kokki_diff', diff);
 
-  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  mapBtns.forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  const goBtn = document.getElementById('go-btn');
   goBtn.classList.add('ready');
 
   let maxLevel = 1;
@@ -340,15 +360,17 @@ function selectDifficulty(diff, btn) {
   else if (diff === 'expert') maxLevel = 4;
 
   currentCountries = allCountries.filter(c => c.level <= maxLevel);
+  // 難易度を変えたら履歴をリセット
+  countryHistory = []; 
 }
 
+// 保存された難易度の復元
 window.onload = function() {
   const saved = localStorage.getItem('quiz_kokki_diff');
   if (saved) {
-    const btns = document.querySelectorAll('.diff-btn');
     const map = { 'easy': 0, 'normal': 1, 'hard': 2, 'expert': 3 };
-    if (btns[map[saved]]) {
-      selectDifficulty(saved, btns[map[saved]]);
+    if (mapBtns[map[saved]]) {
+      selectDifficulty(saved, mapBtns[map[saved]]);
     }
   }
 };
@@ -385,16 +407,26 @@ function playSound(type) {
 function startGame() {
   if (!selectedLevel) return;
   document.getElementById('start-screen').style.display = 'none';
+  // 読み上げキャンセル用
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   nextQuestion();
 }
 
 function getRandomFlagCountry() {
-  let available = currentCountries.filter(c => c.code !== lastCountryCode);
-  if (available.length === 0) available = currentCountries;
+  // 履歴（過去3問）に含まれない国を選ぶ
+  let available = currentCountries.filter(c => !countryHistory.includes(c.code));
+  // 万一、選択肢がなくなったら（あり得ないが）履歴を無視
+  if (available.length === 0) available = currentCountries; 
+  
   const selected = available[Math.floor(Math.random() * available.length)];
-  lastCountryCode = selected.code;
+  
+  // 履歴を更新（新しいものを追加し、4世代前を削除）
+  countryHistory.push(selected.code);
+  if (countryHistory.length > 3) {
+    countryHistory.shift(); 
+  }
+  
   return selected;
 }
 
@@ -408,8 +440,9 @@ function getRandomSpeechCountry(targetCode, isCorrectPair) {
 }
 
 function nextQuestion() {
-  isAnswerable = false;
-  document.getElementById('status-text').innerText = "🔊 きいてね…";
+  // 問題を表示した瞬間にボタンを有効化（読み上げ中でも押せる）
+  setButtonsEnabled(true); 
+  statusText.innerText = "👉 〇 か ✕ を おしてね！";
 
   const targetCountry = getRandomFlagCountry();
   let isCorrectPair = (consecutiveCount >= 3) ? !lastTypeIsCorrect : (Math.random() < 0.5);
@@ -430,21 +463,18 @@ function nextQuestion() {
     enText: speechCountry.enText
   };
 
-  document.getElementById('flag-img').src = "https://flagcdn.com/w320/" + targetCountry.code + ".png";
-  document.getElementById('symbol-emoji').innerText = targetCountry.emoji;
-  document.getElementById('english-text').innerText = currentQuestion.enText;
+  flagImg.src = "https://flagcdn.com/w320/" + targetCountry.code + ".png";
+  symbolEmoji.innerText = targetCountry.emoji;
+  englishText.innerText = currentQuestion.enText;
 
+  // 読み上げ開始（解答ボタンはすでに有効）
   speakText(currentQuestion.speechText);
-  
-  setTimeout(function() {
-    isAnswerable = true;
-    document.getElementById('status-text').innerText = "👉 〇 か ✕ を おしてね！";
-  }, 300);
 }
 
 function speakText(text) {
   if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
+  // 前の読み上げをキャンセルしてから開始
+  window.speechSynthesis.cancel(); 
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = 'ja-JP';
   utter.rate = 1.0;
@@ -453,17 +483,24 @@ function speakText(text) {
 
 function checkAnswer(userChoice) {
   if (!isAnswerable) return;
-  isAnswerable = false;
+  // 連打防止のため即座に無効化
+  setButtonsEnabled(false); 
+
+  // ★重要：ボタンが押されたら、読み上げを即座に強制停止
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); 
+  }
 
   const isUserRight = (userChoice === currentQuestion.isCorrect);
   if (isUserRight) {
-    document.getElementById('status-text').innerText = "⭕ せいかい！";
+    statusText.innerText = "⭕ せいかい！";
     playSound('correct');
   } else {
-    document.getElementById('status-text').innerText = "❌ ざんねん！";
+    statusText.innerText = "❌ ざんねん！";
     playSound('wrong');
   }
-  setTimeout(nextQuestion, 800);
+  // 0.8秒後に次の問題へ
+  setTimeout(nextQuestion, 800); 
 }
 </script>
 </body>
