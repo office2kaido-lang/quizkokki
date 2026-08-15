@@ -268,8 +268,8 @@ const allCountries = [
   // かんたん (10カ国)
   { code: "jp", country: "日本", capital: "東京", enText: "Japan / Tokyo", emoji: "🌸", level: 1 },
   { code: "us", country: "アメリカ", capital: "ワシントン", enText: "USA / Washington", emoji: "🗽", level: 1 },
-  { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑", level: 1 },
   { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼", level: 1 },
+  { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑", level: 1 },
   { code: "de", country: "ドイツ", capital: "ベルリン", enText: "Germany / Berlin", emoji: "🏰", level: 1 },
   { code: "it", country: "イタリア", capital: "ローマ", enText: "Italy / Rome", emoji: "🍕", level: 1 },
   { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼", level: 1 },
@@ -342,7 +342,6 @@ function selectDifficulty(diff, btn) {
   currentCountries = allCountries.filter(c => c.level <= maxLevel);
 }
 
-// 保存された難易度の復元
 window.onload = function() {
   const saved = localStorage.getItem('quiz_kokki_diff');
   if (saved) {
