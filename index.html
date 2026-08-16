@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>せかいの こっき と しゅと クイズ ver00005</title>
+  <title>せかいの こっき と しゅと クイズ ver00006</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
@@ -258,7 +258,7 @@
     ⚠️ 音を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
   </div>
 
-  <header>せかいの こっき & しゅと クイズ ver00005</header>
+  <header>せかいの こっき & しゅと クイズ ver00006</header>
 
   <div id="start-screen">
     <div class="title-helper">ひらがな カタカナ</div>
@@ -268,7 +268,7 @@
       <span class="p1">&</span> <span class="p2">し</span><span class="p1">ゅ</span><span class="p2">と</span>
       <span class="p3">ク</span><span class="p4">イ</span><span class="p3">ズ</span>
     </h1>
-    <div class="version">ver00005</div>
+    <div class="version">ver00006</div>
     
     <div class="diff-container">
       <div class="diff-title">むずかしさを えらんでね</div>
@@ -447,13 +447,19 @@ function startGame() {
 }
 
 function getRandomFlagCountry() {
+  // 履歴の最大保持数を動的に算出（基本20問、登録数が少ない場合は 全体数 - 1）
+  const maxHistory = Math.min(20, Math.max(1, currentCountries.length - 1));
+
   let available = currentCountries.filter(c => !countryHistory.includes(c.code));
-  if (available.length === 0) available = currentCountries; 
+  if (available.length === 0) {
+    available = currentCountries;
+    countryHistory = [];
+  }
   
   const selected = available[Math.floor(Math.random() * available.length)];
   
   countryHistory.push(selected.code);
-  if (countryHistory.length > 3) {
+  if (countryHistory.length > maxHistory) {
     countryHistory.shift(); 
   }
   
@@ -494,7 +500,6 @@ function nextQuestion() {
   };
 
   flagImg.src = "https://flagcdn.com/w320/" + targetCountry.code + ".png";
-  // 読み上げ・英語テキストと絵文字を完全一致させる
   symbolEmoji.innerText = currentQuestion.emoji;
   englishText.innerText = currentQuestion.enText;
 
