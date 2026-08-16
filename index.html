@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>せかいの こっき と しゅと クイズ ver00010</title>
+  <title>せかいの こっき と しゅと クイズ ver00013</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
@@ -180,12 +180,12 @@
       justify-content: center;
     }
     .english-box {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: #1e3a8a;
       background: #e0f2fe;
       border: 3px solid #bae6fd;
-      padding: 6px 20px;
+      padding: 6px 16px;
       border-radius: 30px;
       text-align: center;
       min-height: 38px;
@@ -258,7 +258,7 @@
     ⚠️ 音を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
   </div>
 
-  <header>せかいの こっき & しゅと クイズ ver00010</header>
+  <header>せかいの こっき & しゅと クイズ ver00013</header>
 
   <div id="start-screen">
     <div class="title-helper">ひらがな カタカナ</div>
@@ -268,7 +268,7 @@
       <span class="p1">&</span> <span class="p2">し</span><span class="p1">ゅ</span><span class="p2">と</span>
       <span class="p3">ク</span><span class="p4">イ</span><span class="p3">ズ</span>
     </h1>
-    <div class="version">ver00010</div>
+    <div class="version">ver00013</div>
     
     <div class="diff-container">
       <div class="diff-title">むずかしさを えらんでね</div>
@@ -307,53 +307,179 @@ if (navigator.userAgent.indexOf('LINE') !== -1) {
 }
 
 const allCountries = [
-  // かんたん (10カ国)
+  // 🟦 かんたん (Level 1: 49カ国)
   { code: "jp", country: "日本", capital: "東京", enText: "Japan / Tokyo", emoji: "🌸", level: 1 },
   { code: "us", country: "アメリカ", capital: "ワシントン", enText: "USA / Washington", emoji: "🗽", level: 1 },
+  { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼", level: 1 },
+  { code: "kr", country: "韓国", capital: "ソウル", enText: "South Korea / Seoul", emoji: "🍱", level: 1 },
+  { code: "kp", country: "北朝鮮", capital: "ピョンヤン", enText: "North Korea / Pyongyang", emoji: "🏛️", level: 1 },
+  { code: "ru", country: "ロシア", capital: "モスクワ", enText: "Russia / Moscow", emoji: "🪆", level: 1 },
   { code: "gb", country: "イギリス", capital: "ロンドン", enText: "UK / London", emoji: "👑", level: 1 },
   { code: "fr", country: "フランス", capital: "パリ", enText: "France / Paris", emoji: "🗼", level: 1 },
   { code: "de", country: "ドイツ", capital: "ベルリン", enText: "Germany / Berlin", emoji: "🏰", level: 1 },
   { code: "it", country: "イタリア", capital: "ローマ", enText: "Italy / Rome", emoji: "🍕", level: 1 },
-  { code: "cn", country: "中国", capital: "北京", enText: "China / Beijing", emoji: "🐼", level: 1 },
-  { code: "kr", country: "韓国", capital: "ソウル", enText: "South Korea / Seoul", emoji: "🍱", level: 1 },
+  { code: "es", country: "スペイン", capital: "マドリード", enText: "Spain / Madrid", emoji: "💃", level: 1 },
   { code: "ca", country: "カナダ", capital: "オタワ", enText: "Canada / Ottawa", emoji: "🍁", level: 1 },
   { code: "au", country: "オーストラリア", capital: "キャンベラ", enText: "Australia / Canberra", emoji: "🐨", level: 1 },
+  { code: "br", country: "ブラジル", capital: "ブラジリア", enText: "Brazil / Brasilia", emoji: "⚽", level: 1 },
+  { code: "ar", country: "アルゼンチン", capital: "ブエノスアイレス", enText: "Argentina / Buenos Aires", emoji: "🥩", level: 1 },
+  { code: "mx", country: "メキシコ", capital: "メキシコシティ", enText: "Mexico / Mexico City", emoji: "🌮", level: 1 },
+  { code: "in", country: "インド", capital: "ニューデリー", enText: "India / New Delhi", emoji: "🐘", level: 1 },
+  { code: "th", country: "タイ", capital: "バンコク", enText: "Thailand / Bangkok", emoji: "🐘", level: 1 },
+  { code: "ph", country: "フィリピン", capital: "マニラ", enText: "Philippines / Manila", emoji: "🥭", level: 1 },
+  { code: "id", country: "インドネシア", capital: "ジャカルタ", enText: "Indonesia / Jakarta", emoji: "🏝️", level: 1 },
+  { code: "sg", country: "シンガポール", capital: "シンガポール", enText: "Singapore / Singapore", emoji: "🦁", level: 1 },
+  { code: "my", country: "マレーシア", capital: "クアラルンプール", enText: "Malaysia / Kuala Lumpur", emoji: "🏙️", level: 1 },
+  { code: "vn", country: "ベトナム", capital: "ハノイ", enText: "Vietnam / Hanoi", emoji: "🍜", level: 1 },
+  { code: "tr", country: "トルコ", capital: "アンカラ", enText: "Turkey / Ankara", emoji: "🥙", level: 1 },
+  { code: "sa", country: "サウジアラビア", capital: "リヤド", enText: "Saudi Arabia / Riyadh", emoji: "🌴", level: 1 },
+  { code: "ae", country: "アラブ首長国連邦", capital: "アブダビ", enText: "UAE / Abu Dhabi", emoji: "🏙️", level: 1 },
+  { code: "eg", country: "エジプト", capital: "カイロ", enText: "Egypt / Cairo", emoji: "🐪", level: 1 },
+  { code: "za", country: "南アフリカ", capital: "プレトリア", enText: "South Africa / Pretoria", emoji: "🦁", level: 1 },
+  { code: "ke", country: "ケニア", capital: "ナイロビ", enText: "Kenya / Nairobi", emoji: "🦒", level: 1 },
+  { code: "ng", country: "ナイジェリア", capital: "アブジャ", enText: "Nigeria / Abuja", emoji: "🦅", level: 1 },
+  { code: "se", country: "スウェーデン", capital: "ストックホルム", enText: "Sweden / Stockholm", emoji: "🌲", level: 1 },
+  { code: "no", country: "ノルウェー", capital: "オスロ", enText: "Norway / Oslo", emoji: "🏔️", level: 1 },
+  { code: "fi", country: "フィンランド", capital: "ヘルシンキ", enText: "Finland / Helsinki", emoji: "🎅", level: 1 },
+  { code: "dk", country: "デンマーク", capital: "コペンハーゲン", enText: "Denmark / Copenhagen", emoji: "🧜‍♀️", level: 1 },
+  { code: "nl", country: "オランダ", capital: "アムステルダム", enText: "Netherlands / Amsterdam", emoji: "🌷", level: 1 },
+  { code: "be", country: "ベルギー", capital: "ブリュッセル", enText: "Belgium / Brussels", emoji: "🍫", level: 1 },
+  { code: "ch", country: "スイス", capital: "ベルン", enText: "Switzerland / Bern", emoji: "🧀", level: 1 },
+  { code: "at", country: "オーストリア", capital: "ウィーン", enText: "Austria / Vienna", emoji: "🎼", level: 1 },
+  { code: "pl", country: "ポーランド", capital: "ワルシャワ", enText: "Poland / Warsaw", emoji: "🥟", level: 1 },
+  { code: "ua", country: "ウクライナ", capital: "キーウ", enText: "Ukraine / Kyiv", emoji: "🌻", level: 1 },
+  { code: "il", country: "イスラエル", capital: "エルサレム", enText: "Israel / Jerusalem", emoji: "📜", level: 1 },
+  { code: "ir", country: "イラン", capital: "テヘラン", enText: "Iran / Tehran", emoji: "🏛️", level: 1 },
+  { code: "iq", country: "イラク", capital: "バグダッド", enText: "Iraq / Baghdad", emoji: "🕌", level: 1 },
+  { code: "pk", country: "パキスタン", capital: "イスラマバード", enText: "Pakistan / Islamabad", emoji: "🏏", level: 1 },
+  { code: "bd", country: "バングラデシュ", capital: "ダッカ", enText: "Bangladesh / Dhaka", emoji: "🐅", level: 1 },
+  { code: "nz", country: "ニュージーランド", capital: "ウェリントン", enText: "New Zealand / Wellington", emoji: "🥝", level: 1 },
+  { code: "gr", country: "ギリシャ", capital: "アテネ", enText: "Greece / Athens", emoji: "🏛️", level: 1 },
+  { code: "pt", country: "ポルトガル", capital: "リスボン", enText: "Portugal / Lisbon", emoji: "⛵", level: 1 },
+  { code: "hu", country: "ハンガリー", capital: "ブダペスト", enText: "Hungary / Budapest", emoji: "🎻", level: 1 },
 
-  // ふつう (追加10カ国)
-  { code: "br", country: "ブラジル", capital: "ブラジリア", enText: "Brazil / Brasilia", emoji: "⚽", level: 2 },
-  { code: "eg", country: "エジプト", capital: "カイロ", enText: "Egypt / Cairo", emoji: "🐪", level: 2 },
-  { code: "in", country: "インド", capital: "ニューデリー", enText: "India / New Delhi", emoji: "🐘", level: 2 },
-  { code: "es", country: "スペイン", capital: "マドリード", enText: "Spain / Madrid", emoji: "💃", level: 2 },
-  { code: "sg", country: "シンガポール", capital: "シンガポール", enText: "Singapore / Singapore", emoji: "🦁", level: 2 },
-  { code: "th", country: "タイ", capital: "バンコク", enText: "Thailand / Bangkok", emoji: "🐘", level: 2 },
-  { code: "vn", country: "ベトナム", capital: "ハノイ", enText: "Vietnam / Hanoi", emoji: "🍜", level: 2 },
-  { code: "mx", country: "メキシコ", capital: "メキシコシティ", enText: "Mexico / Mexico City", emoji: "🌮", level: 2 },
-  { code: "ru", country: "ロシア", capital: "モスクワ", enText: "Russia / Moscow", emoji: "🪆", level: 2 },
-  { code: "ar", country: "アルゼンチン", capital: "ブエノスアイレス", enText: "Argentina / Buenos Aires", emoji: "🥩", level: 2 },
+  // 🟩 ふつう (Level 2: 42カ国)
+  { code: "cl", country: "チリ", capital: "サンティアゴ", enText: "Chile / Santiago", emoji: "🏔️", level: 2 },
+  { code: "pe", country: "ペルー", capital: "リマ", enText: "Peru / Lima", emoji: "🦙", level: 2 },
+  { code: "co", country: "コロンビア", capital: "ボゴタ", enText: "Colombia / Bogota", emoji: "☕", level: 2 },
+  { code: "ve", country: "ベネズエラ", capital: "カラカス", enText: "Venezuela / Caracas", emoji: "💧", level: 2 },
+  { code: "cu", country: "キューバ", capital: "ハバナ", enText: "Cuba / Havana", emoji: "🎺", level: 2 },
+  { code: "jm", country: "ジャマイカ", capital: "キングストン", enText: "Jamaica / Kingston", emoji: "🏃", level: 2 },
+  { code: "ma", country: "モロッコ", capital: "ラバト", enText: "Morocco / Rabat", emoji: "🏺", level: 2 },
+  { code: "tn", country: "チュニジア", capital: "チュニス", enText: "Tunisia / Tunis", emoji: "🏛️", level: 2 },
+  { code: "dz", country: "アルジェリア", capital: "アルジェ", enText: "Algeria / Algiers", emoji: "🏜️", level: 2 },
+  { code: "et", country: "エチオピア", capital: "アディスアベバ", enText: "Ethiopia / Addis Ababa", emoji: "☕", level: 2 },
+  { code: "tz", country: "タンザニア", capital: "ドドマ", enText: "Tanzania / Dodoma", emoji: "🦁", level: 2 },
+  { code: "ug", country: "ウガンダ", capital: "カンパラ", enText: "Uganda / Kampala", emoji: "🦍", level: 2 },
+  { code: "gh", country: "ガーナ", capital: "アクラ", enText: "Ghana / Accra", emoji: "🍫", level: 2 },
+  { code: "sn", country: "セネガル", capital: "ダカール", enText: "Senegal / Dakar", emoji: "🦁", level: 2 },
+  { code: "qa", country: "カタール", capital: "ドーハ", enText: "Qatar / Doha", emoji: "⚽", level: 2 },
+  { code: "kw", country: "クウェート", capital: "クウェート", enText: "Kuwait / Kuwait City", emoji: "🛢️", level: 2 },
+  { code: "jo", country: "ヨルダン", capital: "アンマン", enText: "Jordan / Amman", emoji: "🏛️", level: 2 },
+  { code: "lb", country: "レバノン", capital: "ベイルート", enText: "Lebanon / Beirut", emoji: "🌲", level: 2 },
+  { code: "sy", country: "シリア", capital: "ダマスカス", enText: "Syria / Damascus", emoji: "🏛️", level: 2 },
+  { code: "af", country: "アフガニスタン", capital: "カブール", enText: "Afghanistan / Kabul", emoji: "🏔️", level: 2 },
+  { code: "mm", country: "ミャンマー", capital: "ネピドー", enText: "Myanmar / Naypyidaw", emoji: "🛕", level: 2 },
+  { code: "kh", country: "カンボジア", capital: "プノンペン", enText: "Cambodia / Phnom Penh", emoji: "🛕", level: 2 },
+  { code: "la", country: "ラオス", capital: "ビエンチャン", enText: "Laos / Vientiane", emoji: "🐘", level: 2 },
+  { code: "np", country: "ネパール", capital: "カトマンズ", enText: "Nepal / Kathmandu", emoji: "🏔️", level: 2 },
+  { code: "lk", country: "スリランカ", capital: "スリジャヤワルダナプラコッテ", enText: "Sri Lanka / Sri Jayawardenepura Kotte", emoji: "🍵", level: 2 },
+  { code: "mn", country: "モンゴル", capital: "ウランバートル", enText: "Mongolia / Ulaanbaatar", emoji: "🐎", level: 2 },
+  { code: "kz", country: "カザフスタン", capital: "アスタナ", enText: "Kazakhstan / Astana", emoji: "🦅", level: 2 },
+  { code: "uz", country: "ウズベキスタン", capital: "タシュケント", enText: "Uzbekistan / Tashkent", emoji: "🕌", level: 2 },
+  { code: "cz", country: "チェコ", capital: "プラハ", enText: "Czech Republic / Prague", emoji: "🏰", level: 2 },
+  { code: "sk", country: "スロバキア", capital: "ブラチスラバ", enText: "Slovakia / Bratislava", emoji: "🏰", level: 2 },
+  { code: "ro", country: "ルーマニア", capital: "ブカレスト", enText: "Romania / Bucharest", emoji: "🧛", level: 2 },
+  { code: "bg", country: "ブルガリア", capital: "ソフィア", enText: "Bulgaria / Sofia", emoji: "🥣", level: 2 },
+  { code: "hr", country: "クロアチア", capital: "ザグレブ", enText: "Croatia / Zagreb", emoji: "⚽", level: 2 },
+  { code: "rs", country: "セルビア", capital: "ベオグラード", enText: "Serbia / Belgrade", emoji: "🇷🇸", level: 2 },
+  { code: "si", country: "スロベニア", capital: "リュブリャナ", enText: "Slovenia / Ljubljana", emoji: "🏔️", level: 2 },
+  { code: "lt", country: "リトアニア", capital: "ビリニュス", enText: "Lithuania / Vilnius", emoji: "🌲", level: 2 },
+  { code: "lv", country: "ラトビア", capital: "リガ", enText: "Latvia / Riga", emoji: "🏰", level: 2 },
+  { code: "ee", country: "エストニア", capital: "タリン", enText: "Estonia / Tallinn", emoji: "💻", level: 2 },
+  { code: "is", country: "アイスランド", capital: "レイキャビク", enText: "Iceland / Reykjavik", emoji: "🌋", level: 2 },
+  { code: "ie", country: "アイルランド", capital: "ダブリン", enText: "Ireland / Dublin", emoji: "🍀", level: 2 },
+  { code: "lu", country: "ルクセンブルク", capital: "ルクセンブルク", enText: "Luxembourg / Luxembourg", emoji: "🏰", level: 2 },
+  { code: "mt", country: "マルタ", capital: "バレッタ", enText: "Malta / Valletta", emoji: "🏝️", level: 2 },
 
-  // むずかしい (追加10カ国)
-  { code: "za", country: "南アフリカ", capital: "プレトリア", enText: "South Africa / Pretoria", emoji: "🦁", level: 3 },
-  { code: "nl", country: "オランダ", capital: "アムステルダム", enText: "Netherlands / Amsterdam", emoji: "🌷", level: 3 },
-  { code: "ch", country: "スイス", capital: "ベルン", enText: "Switzerland / Bern", emoji: "🧀", level: 3 },
-  { code: "se", country: "スウェーデン", capital: "ストックホルム", enText: "Sweden / Stockholm", emoji: "🌲", level: 3 },
-  { code: "gr", country: "ギリシャ", capital: "アテネ", enText: "Greece / Athens", emoji: "🏛️", level: 3 },
-  { code: "tr", country: "トルコ", capital: "アンカラ", enText: "Turkey / Ankara", emoji: "🥙", level: 3 },
-  { code: "nz", country: "ニュージーランド", capital: "ウェリントン", enText: "New Zealand / Wellington", emoji: "🥝", level: 3 },
-  { code: "ph", country: "フィリピン", capital: "マニラ", enText: "Philippines / Manila", emoji: "🥭", level: 3 },
-  { code: "id", country: "インドネシア", capital: "ジャカルタ", enText: "Indonesia / Jakarta", emoji: "🏝️", level: 3 },
-  { code: "pe", country: "ペルー", capital: "リマ", enText: "Peru / Lima", emoji: "🦙", level: 3 },
+  // 🟧 むずかしい (Level 3: 40カ国)
+  { code: "bo", country: "ボリビア", capital: "スクレ", enText: "Bolivia / Sucre", emoji: "🦩", level: 3 },
+  { code: "py", country: "パラグアイ", capital: "アスンシオン", enText: "Paraguay / Asuncion", emoji: "🌿", level: 3 },
+  { code: "uy", country: "ウルグアイ", capital: "モンテビデオ", enText: "Uruguay / Montevideo", emoji: "⚽", level: 3 },
+  { code: "sd", country: "スーダン", capital: "ハルツーム", enText: "Sudan / Khartoum", emoji: "🏜️", level: 3 },
+  { code: "ss", country: "南スーダン", capital: "ジュバ", enText: "South Sudan / Juba", emoji: "🦅", level: 3 },
+  { code: "mg", country: "マダガスカル", capital: "アンタナナリボ", enText: "Madagascar / Antananarivo", emoji: "🐒", level: 3 },
+  { code: "zm", country: "ザンビア", capital: "ルサカ", enText: "Zambia / Lusaka", emoji: "🌊", level: 3 },
+  { code: "zw", country: "ジンバブエ", capital: "ハラレ", enText: "Zimbabwe / Harare", emoji: "🪨", level: 3 },
+  { code: "bw", country: "ボツワナ", capital: "ハボローネ", enText: "Botswana / Gaborone", emoji: "💎", level: 3 },
+  { code: "na", country: "ナミビア", capital: "ウィントフック", enText: "Namibia / Windhoek", emoji: "🏜️", level: 3 },
+  { code: "mr", country: "モーリタニア", capital: "ヌアクショット", enText: "Mauritania / Nouakchott", emoji: "🏜️", level: 3 },
+  { code: "ne", country: "ニジェール", capital: "ニアメ", enText: "Niger / Niamey", emoji: "🦒", level: 3 },
+  { code: "td", country: "チャド", capital: "ンジャメナ", enText: "Chad / N'Djamena", emoji: "🐪", level: 3 },
+  { code: "bf", country: "ブルキナファソ", capital: "ワガドゥグー", enText: "Burkina Faso / Ouagadougou", emoji: "🐎", level: 3 },
+  { code: "tg", country: "トーゴ", capital: "ロメ", enText: "Togo / Lome", emoji: "🌴", level: 3 },
+  { code: "bj", country: "ベナン", capital: "ポルトノボ", enText: "Benin / Porto-Novo", emoji: "🎭", level: 3 },
+  { code: "rw", country: "ルワンダ", capital: "キガリ", enText: "Rwanda / Kigali", emoji: "🦍", level: 3 },
+  { code: "bi", country: "ブルンジ", capital: "ギテガ", enText: "Burundi / Gitega", emoji: "🥁", level: 3 },
+  { code: "mw", country: "マラウイ", capital: "リロングウェ", enText: "Malawi / Lilongwe", emoji: "🐟", level: 3 },
+  { code: "mz", country: "モザンビーク", capital: "マプト", enText: "Mozambique / Maputo", emoji: "🏝️", level: 3 },
+  { code: "ao", country: "アンゴラ", capital: "ルアンダ", enText: "Angola / Luanda", emoji: "🛢️", level: 3 },
+  { code: "cg", country: "コンゴ共和国", capital: "ブラザビル", enText: "Republic of the Congo / Brazzaville", emoji: "🌳", level: 3 },
+  { code: "cd", country: "コンゴ民主共和国", capital: "キンシャサ", enText: "DR Congo / Kinshasa", emoji: "🦧", level: 3 },
+  { code: "ga", country: "ガボン", capital: "リーブルビル", enText: "Gabon / Libreville", emoji: "🦧", level: 3 },
+  { code: "gq", country: "赤道ギニア", capital: "マラボ", enText: "Equatorial Guinea / Malabo", emoji: "🌴", level: 3 },
+  { code: "er", country: "エリトリア", capital: "アスマラ", enText: "Eritrea / Asmara", emoji: "🐪", level: 3 },
+  { code: "cm", country: "カメルーン", capital: "ヤウンデ", enText: "Cameroon / Yaounde", emoji: "🦁", level: 3 },
+  { code: "cf", country: "中央アフリカ", capital: "バンギ", enText: "Central African Republic / Bangui", emoji: "🐘", level: 3 },
+  { code: "sl", country: "シエラレオネ", capital: "フリータウン", enText: "Sierra Leone / Freetown", emoji: "💎", level: 3 },
+  { code: "lr", country: "リベリア", capital: "モンロビア", enText: "Liberia / Monrovia", emoji: "🚢", level: 3 },
+  { code: "gn", country: "ギニア", capital: "コナクリ", enText: "Guinea / Conakry", emoji: "⛰️", level: 3 },
+  { code: "gw", country: "ギニアビサウ", capital: "ビサウ", enText: "Guinea-Bissau / Bissau", emoji: "🌾", level: 3 },
+  { code: "gm", country: "ガンビア", capital: "バンジュール", enText: "Gambia / Banjul", emoji: "🌊", level: 3 },
+  { code: "sb", country: "ソロモン諸島", capital: "ホニアラ", enText: "Solomon Islands / Honiara", emoji: "🏝️", level: 3 },
+  { code: "fj", country: "フィジー", capital: "スバ", enText: "Fiji / Suva", emoji: "🌴", level: 3 },
+  { code: "pg", country: "パプアニューギニア", capital: "ポートモレスビー", enText: "Papua New Guinea / Port Moresby", emoji: "🦜", level: 3 },
+  { code: "ws", country: "サモア", capital: "アピア", enText: "Samoa / Apia", emoji: "🥥", level: 3 },
+  { code: "to", country: "トンガ", capital: "ヌクアロファ", enText: "Tonga / Nuku'alofa", emoji: "🐋", level: 3 },
+  { code: "ki", country: "キリバス", capital: "タラワ", enText: "Kiribati / Tarawa", emoji: "🦀", level: 3 },
+  { code: "vu", country: "バヌアツ", capital: "ポートビラ", enText: "Vanuatu / Port Vila", emoji: "🌋", level: 3 },
 
-  // ちょう難問 (追加10カ国)
-  { code: "mn", country: "モンゴル", capital: "ウランバートル", enText: "Mongolia / Ulaanbaatar", emoji: "🐎", level: 4 },
-  { code: "ke", country: "ケニア", capital: "ナイロビ", enText: "Kenya / Nairobi", emoji: "🦒", level: 4 },
-  { code: "fi", country: "フィンランド", capital: "ヘルシンキ", enText: "Finland / Helsinki", emoji: "🎅", level: 4 },
-  { code: "pl", country: "ポーランド", capital: "ワルシャワ", enText: "Poland / Warsaw", emoji: "🥟", level: 4 },
-  { code: "pt", country: "ポルトガル", capital: "リスボン", enText: "Portugal / Lisbon", emoji: "⛵", level: 4 },
-  { code: "cl", country: "チリ", capital: "サンティアゴ", enText: "Chile / Santiago", emoji: "🏔️", level: 4 },
-  { code: "co", country: "コロンビア", capital: "ボゴタ", enText: "Colombia / Bogota", emoji: "☕", level: 4 },
-  { code: "my", country: "マレーシア", capital: "クアラルンプール", enText: "Malaysia / Kuala Lumpur", emoji: "🏙️", level: 4 },
-  { code: "sa", country: "サウジアラビア", capital: "リヤド", enText: "Saudi Arabia / Riyadh", emoji: "🌴", level: 4 },
-  { code: "is", country: "アイスランド", capital: "レイキャビク", enText: "Iceland / Reykjavik", emoji: "🌋", level: 4 }
+  // 🟥 ちょう難問 (Level 4: 33カ国)
+  { code: "km", country: "コモロ", capital: "モロニ", enText: "Comoros / Moroni", emoji: "🏝️", level: 4 },
+  { code: "sc", country: "セーシェル", capital: "ビクトリア", enText: "Seychelles / Victoria", emoji: "🐢", level: 4 },
+  { code: "mu", country: "モーリシャス", capital: "ポートルイス", enText: "Mauritius / Port Louis", emoji: "🦤", level: 4 },
+  { code: "cv", country: "カーボベルデ", capital: "プライア", enText: "Cape Verde / Praia", emoji: "🏝️", level: 4 },
+  { code: "st", country: "サントメ・プリンシペ", capital: "サントメ", enText: "Sao Tome and Principe / Sao Tome", emoji: "🍫", level: 4 },
+  { code: "ls", country: "レソト", capital: "マセル", enText: "Lesotho / Maseru", emoji: "🏔️", level: 4 },
+  { code: "sz", country: "エスワティニ", capital: "ムババーネ", enText: "Eswatini / Mbabane", emoji: "🛡️", level: 4 },
+  { code: "dj", country: "ジブチ", capital: "ジブチ", enText: "Djibouti / Djibouti", emoji: "⛵", level: 4 },
+  { code: "tm", country: "トルクメニスタン", capital: "アシガバート", enText: "Turkmenistan / Ashgabat", emoji: "🔥", level: 4 },
+  { code: "tj", country: "タジキスタン", capital: "ドゥシャンベ", enText: "Tajikistan / Dushanbe", emoji: "🏔️", level: 4 },
+  { code: "kg", country: "キルギス", capital: "ビシュケク", enText: "Kyrgyzstan / Bishkek", emoji: "🐎", level: 4 },
+  { code: "am", country: "アルメニア", capital: "エレバン", enText: "Armenia / Yerevan", emoji: "🏛️", level: 4 },
+  { code: "az", country: "アゼルバイジャン", capital: "バクー", enText: "Azerbaijan / Baku", emoji: "🔥", level: 4 },
+  { code: "ge", country: "ジョージア", capital: "トビリシ", enText: "Georgia / Tbilisi", emoji: "🍷", level: 4 },
+  { code: "md", country: "モルドバ", capital: "キシナウ", enText: "Moldova / Chisinau", emoji: "🍇", level: 4 },
+  { code: "by", country: "ベラルーシ", capital: "ミンスク", enText: "Belarus / Minsk", emoji: "🌲", level: 4 },
+  { code: "sm", country: "サンマリノ", capital: "サンマリノ", enText: "San Marino / San Marino", emoji: "🏰", level: 4 },
+  { code: "ad", country: "アンドラ", capital: "アンドララベリャ", enText: "Andorra / Andorra la Vella", emoji: "🏔️", level: 4 },
+  { code: "li", country: "リヒテンシュタイン", capital: "ファドゥーツ", enText: "Liechtenstein / Vaduz", emoji: "🏰", level: 4 },
+  { code: "mc", country: "モナコ", capital: "モナコ", enText: "Monaco / Monaco", emoji: "🏎️", level: 4 },
+  { code: "bh", country: "バーレーン", capital: "マナマ", enText: "Bahrain / Manama", emoji: "🏎️", level: 4 },
+  { code: "bn", country: "ブルネイ", capital: "バンダルスリブガワン", enText: "Brunei / Bandar Seri Begawan", emoji: "🕌", level: 4 },
+  { code: "tl", country: "東ティモール", capital: "ディリ", enText: "East Timor / Dili", emoji: "🐊", level: 4 },
+  { code: "bb", country: "バルバドス", capital: "ブリッジタウン", enText: "Barbados / Bridgetown", emoji: "🌴", level: 4 },
+  { code: "lc", country: "セントルシア", capital: "カストリーズ", enText: "Saint Lucia / Castries", emoji: "⛰️", level: 4 },
+  { code: "vc", country: "セントビンセント", capital: "キングスタウン", enText: "Saint Vincent / Kingstown", emoji: "⛵", level: 4 },
+  { code: "ag", country: "アンティグア・バーブーダ", capital: "セントジョンズ", enText: "Antigua and Barbuda / St. John's", emoji: "🏖️", level: 4 },
+  { code: "dm", country: "ドミニカ国", capital: "ロソー", enText: "Dominica / Roseau", emoji: "🦜", level: 4 },
+  { code: "gd", country: "グレナダ", capital: "セントジョージズ", enText: "Grenada / St. George's", emoji: "🏝️", level: 4 },
+  { code: "bz", country: "ベリーズ", capital: "ベルモパン", enText: "Belize / Belmopan", emoji: "🐠", level: 4 },
+  { code: "sr", country: "スリナム", capital: "パラマリボ", enText: "Suriname / Paramaribo", emoji: "🌳", level: 4 },
+  { code: "gy", country: "ガイアナ", capital: "ジョージタウン", enText: "Guyana / Georgetown", emoji: "🐆", level: 4 },
+  { code: "ly", country: "リビア", capital: "トリポリ", enText: "Libya / Tripoli", emoji: "🏜️", level: 4 },
+  { code: "ye", country: "イエメン", capital: "サナア", enText: "Yemen / Sana'a", emoji: "🏰", level: 4 },
+  { code: "om", country: "オマーン", capital: "マスカット", enText: "Oman / Muscat", emoji: "⛵", level: 4 }
 ];
 
 let selectedLevel = null;
@@ -465,16 +591,28 @@ function nextQuestion() {
   setButtonsEnabled(true); 
   statusText.innerText = "👉 〇 か ✕ を おしてね！";
 
-  // 山札が空になったら新しく全問シャッフル
   if (questionDeck.length === 0) {
     questionDeck = shuffle(currentCountries);
   }
 
-  // 1. 直前の国旗と重複しない候補から国旗を抽出
+  const mustBeTrue = (consecutiveCount >= 3 && !lastTypeIsCorrect);
+  const mustBeFalse = (consecutiveCount >= 3 && lastTypeIsCorrect);
+
+  let excludedTargets = new Set();
+  if (lastTargetCode) excludedTargets.add(lastTargetCode);
+  if (mustBeTrue && lastSpokenCode) excludedTargets.add(lastSpokenCode);
+
   let candidates = [];
   for (let i = 0; i < questionDeck.length; i++) {
-    if (questionDeck[i].code !== lastTargetCode) {
+    if (!excludedTargets.has(questionDeck[i].code)) {
       candidates.push(i);
+    }
+  }
+  if (candidates.length === 0) {
+    for (let i = 0; i < questionDeck.length; i++) {
+      if (questionDeck[i].code !== lastTargetCode) {
+        candidates.push(i);
+      }
     }
   }
   if (candidates.length === 0) candidates = [0];
@@ -482,12 +620,13 @@ function nextQuestion() {
   const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
   const targetCountry = questionDeck.splice(chosenIdx, 1)[0];
 
-  // 2. 正誤判定の決定（直前音声と同じ国旗なら強制的に✕にして音声重複を阻止）
   let isCorrectPair;
-  if (targetCountry.code === lastSpokenCode) {
+  if (mustBeTrue) {
+    isCorrectPair = (targetCountry.code !== lastSpokenCode);
+  } else if (mustBeFalse) {
     isCorrectPair = false;
-  } else if (consecutiveCount >= 3) {
-    isCorrectPair = !lastTypeIsCorrect;
+  } else if (targetCountry.code === lastSpokenCode) {
+    isCorrectPair = false;
   } else {
     isCorrectPair = Math.random() < 0.5;
   }
@@ -499,7 +638,6 @@ function nextQuestion() {
     consecutiveCount = 1;
   }
 
-  // 3. 読み上げ内容の選出（直前の音声と絶対に被らない候補から選定）
   let questionContent;
   if (isCorrectPair) {
     questionContent = targetCountry;
