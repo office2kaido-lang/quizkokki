@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <!-- タイトルをver00004に更新 -->
-  <title>せかいの こっき と しゅと クイズ ver00004</title>
+  <title>せかいの こっき と しゅと クイズ ver00005</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
       font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
-      /* 背景色を画像の空色（グラデーション）に合わせる */
       background: linear-gradient(135deg, #a5f3fc, #dbeafe);
       display: flex;
       justify-content: center;
@@ -28,11 +26,9 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      /* 画像のような影をつける */
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     header {
-      /* 画像のヘッダー色に近づける */
       background: #4f46e5;
       color: white;
       text-align: center;
@@ -46,7 +42,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      /* 画像の背景を再現（幼児向けのイラストを模索） */
       background: linear-gradient(135deg, #e0f7fa, #fff); 
       display: flex;
       flex-direction: column;
@@ -56,13 +51,11 @@
       padding: 20px;
       color: #333;
     }
-    /* 画像の「ひらがな カタカナ」テキスト */
     .title-helper {
       font-size: 14px;
       color: #777;
       margin-bottom: -10px;
     }
-    /* 画像のカラフルなメインタイトル */
     .cover-title {
       font-size: 28px;
       font-weight: 900;
@@ -70,12 +63,11 @@
       line-height: 1.3;
       margin-bottom: 20px;
     }
-    .cover-title .p1 { color: #ec4899; } /* ピンク */
-    .cover-title .p2 { color: #f59e0b; } /* オレンジ */
-    .cover-title .p3 { color: #10b981; } /* グリーン */
-    .cover-title .p4 { color: #3b82f6; } /* ブルー */
+    .cover-title .p1 { color: #ec4899; }
+    .cover-title .p2 { color: #f59e0b; }
+    .cover-title .p3 { color: #10b981; }
+    .cover-title .p4 { color: #3b82f6; }
     
-    /* バージョン表記 */
     .version {
       font-size: 12px;
       color: #aaa;
@@ -125,7 +117,7 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
     .btn-go {
-      background: #ef4444; /* 画像の赤い「GO」 */
+      background: #ef4444;
       color: white;
       font-size: 56px;
       font-weight: 900;
@@ -148,7 +140,6 @@
       box-shadow: 0 4px 0 #b91c1c;
     }
     
-    /* 下部の案内テキスト */
     .instruction {
       font-size: 14px;
       color: #333;
@@ -267,10 +258,9 @@
     ⚠️ 音を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
   </div>
 
-  <header>せかいの こっき & しゅと クイズ ver00004</header>
+  <header>せかいの こっき & しゅと クイズ ver00005</header>
 
   <div id="start-screen">
-    <!-- 画像のデザインを再現 -->
     <div class="title-helper">ひらがな カタカナ</div>
     <h1 class="cover-title">
       <span class="p1">せ</span><span class="p2">か</span><span class="p1">い</span><span class="p2">の</span>
@@ -278,7 +268,7 @@
       <span class="p1">&</span> <span class="p2">し</span><span class="p1">ゅ</span><span class="p2">と</span>
       <span class="p3">ク</span><span class="p4">イ</span><span class="p3">ズ</span>
     </h1>
-    <div class="version">ver00004</div>
+    <div class="version">ver00005</div>
     
     <div class="diff-container">
       <div class="diff-title">むずかしさを えらんでね</div>
@@ -290,10 +280,8 @@
       </div>
     </div>
 
-    <!-- 画像の赤い「GO」ボタン -->
     <button id="go-btn" class="btn-go" onclick="startGame()">GO</button>
     
-    <!-- 画像の下部の案内テキスト -->
     <div class="instruction">
       黒い3点をタップし、デフォルトのブラウザで開くをタップして下さい。
     </div>
@@ -370,7 +358,6 @@ const allCountries = [
 
 let selectedLevel = null;
 let currentCountries = [];
-// 重複防止用の履歴（最大3件保持）
 let countryHistory = []; 
 let consecutiveCount = 0;
 let lastTypeIsCorrect = null;
@@ -409,7 +396,6 @@ function selectDifficulty(diff, btn) {
   else if (diff === 'expert') maxLevel = 4;
 
   currentCountries = allCountries.filter(c => c.level <= maxLevel);
-  // 難易度を変えたら履歴をリセット
   countryHistory = []; 
 }
 
@@ -461,13 +447,11 @@ function startGame() {
 }
 
 function getRandomFlagCountry() {
-  // 履歴（過去3問）に含まれない国を選ぶ
   let available = currentCountries.filter(c => !countryHistory.includes(c.code));
   if (available.length === 0) available = currentCountries; 
   
   const selected = available[Math.floor(Math.random() * available.length)];
   
-  // 履歴を更新（新しいものを追加し、4世代前を削除）
   countryHistory.push(selected.code);
   if (countryHistory.length > 3) {
     countryHistory.shift(); 
@@ -499,17 +483,19 @@ function nextQuestion() {
     consecutiveCount = 1;
   }
 
-  const speechCountry = getRandomSpeechCountry(targetCountry.code, isCorrectPair);
+  const questionContent = getRandomSpeechCountry(targetCountry.code, isCorrectPair);
 
   currentQuestion = {
     target: targetCountry,
     isCorrect: isCorrectPair,
-    speechText: speechCountry.country + "、" + speechCountry.capital,
-    enText: speechCountry.enText
+    speechText: questionContent.country + "、" + questionContent.capital,
+    enText: questionContent.enText,
+    emoji: questionContent.emoji
   };
 
   flagImg.src = "https://flagcdn.com/w320/" + targetCountry.code + ".png";
-  symbolEmoji.innerText = targetCountry.emoji;
+  // 読み上げ・英語テキストと絵文字を完全一致させる
+  symbolEmoji.innerText = currentQuestion.emoji;
   englishText.innerText = currentQuestion.enText;
 
   speakText(currentQuestion.speechText);
