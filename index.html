@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>せかいの こっき と しゅと クイズ ver00006</title>
+  <title>せかいの こっき と しゅと クイズ ver00010</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
@@ -258,7 +258,7 @@
     ⚠️ 音を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
   </div>
 
-  <header>せかいの こっき & しゅと クイズ ver00006</header>
+  <header>せかいの こっき & しゅと クイズ ver00010</header>
 
   <div id="start-screen">
     <div class="title-helper">ひらがな カタカナ</div>
@@ -268,7 +268,7 @@
       <span class="p1">&</span> <span class="p2">し</span><span class="p1">ゅ</span><span class="p2">と</span>
       <span class="p3">ク</span><span class="p4">イ</span><span class="p3">ズ</span>
     </h1>
-    <div class="version">ver00006</div>
+    <div class="version">ver00010</div>
     
     <div class="diff-container">
       <div class="diff-title">むずかしさを えらんでね</div>
@@ -358,7 +358,9 @@ const allCountries = [
 
 let selectedLevel = null;
 let currentCountries = [];
-let countryHistory = []; 
+let questionDeck = [];
+let lastTargetCode = null;
+let lastSpokenCode = null;
 let consecutiveCount = 0;
 let lastTypeIsCorrect = null;
 let currentQuestion = null;
@@ -380,6 +382,15 @@ function setButtonsEnabled(enabled) {
   batsuBtn.disabled = !enabled;
 }
 
+function shuffle(array) {
+  let arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 function selectDifficulty(diff, btn) {
   selectedLevel = diff;
   localStorage.setItem('quiz_kokki_diff', diff);
@@ -396,7 +407,11 @@ function selectDifficulty(diff, btn) {
   else if (diff === 'expert') maxLevel = 4;
 
   currentCountries = allCountries.filter(c => c.level <= maxLevel);
-  countryHistory = []; 
+  questionDeck = shuffle(currentCountries);
+  lastTargetCode = null;
+  lastSpokenCode = null;
+  consecutiveCount = 0;
+  lastTypeIsCorrect = null;
 }
 
 window.onload = function() {
@@ -446,41 +461,36 @@ function startGame() {
   nextQuestion();
 }
 
-function getRandomFlagCountry() {
-  // 履歴の最大保持数を動的に算出（基本20問、登録数が少ない場合は 全体数 - 1）
-  const maxHistory = Math.min(20, Math.max(1, currentCountries.length - 1));
-
-  let available = currentCountries.filter(c => !countryHistory.includes(c.code));
-  if (available.length === 0) {
-    available = currentCountries;
-    countryHistory = [];
-  }
-  
-  const selected = available[Math.floor(Math.random() * available.length)];
-  
-  countryHistory.push(selected.code);
-  if (countryHistory.length > maxHistory) {
-    countryHistory.shift(); 
-  }
-  
-  return selected;
-}
-
-function getRandomSpeechCountry(targetCode, isCorrectPair) {
-  if (isCorrectPair) {
-    return currentCountries.find(c => c.code === targetCode);
-  } else {
-    let available = currentCountries.filter(c => c.code !== targetCode);
-    return available[Math.floor(Math.random() * available.length)];
-  }
-}
-
 function nextQuestion() {
   setButtonsEnabled(true); 
   statusText.innerText = "👉 〇 か ✕ を おしてね！";
 
-  const targetCountry = getRandomFlagCountry();
-  let isCorrectPair = (consecutiveCount >= 3) ? !lastTypeIsCorrect : (Math.random() < 0.5);
+  // 山札が空になったら新しく全問シャッフル
+  if (questionDeck.length === 0) {
+    questionDeck = shuffle(currentCountries);
+  }
+
+  // 1. 直前の国旗と重複しない候補から国旗を抽出
+  let candidates = [];
+  for (let i = 0; i < questionDeck.length; i++) {
+    if (questionDeck[i].code !== lastTargetCode) {
+      candidates.push(i);
+    }
+  }
+  if (candidates.length === 0) candidates = [0];
+  
+  const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
+  const targetCountry = questionDeck.splice(chosenIdx, 1)[0];
+
+  // 2. 正誤判定の決定（直前音声と同じ国旗なら強制的に✕にして音声重複を阻止）
+  let isCorrectPair;
+  if (targetCountry.code === lastSpokenCode) {
+    isCorrectPair = false;
+  } else if (consecutiveCount >= 3) {
+    isCorrectPair = !lastTypeIsCorrect;
+  } else {
+    isCorrectPair = Math.random() < 0.5;
+  }
 
   if (lastTypeIsCorrect === isCorrectPair) {
     consecutiveCount++;
@@ -489,7 +499,20 @@ function nextQuestion() {
     consecutiveCount = 1;
   }
 
-  const questionContent = getRandomSpeechCountry(targetCountry.code, isCorrectPair);
+  // 3. 読み上げ内容の選出（直前の音声と絶対に被らない候補から選定）
+  let questionContent;
+  if (isCorrectPair) {
+    questionContent = targetCountry;
+  } else {
+    let availableSpeech = currentCountries.filter(c => c.code !== targetCountry.code && c.code !== lastSpokenCode);
+    if (availableSpeech.length === 0) {
+      availableSpeech = currentCountries.filter(c => c.code !== targetCountry.code);
+    }
+    questionContent = availableSpeech[Math.floor(Math.random() * availableSpeech.length)];
+  }
+
+  lastTargetCode = targetCountry.code;
+  lastSpokenCode = questionContent.code;
 
   currentQuestion = {
     target: targetCountry,
