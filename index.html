@@ -1,15 +1,15 @@
-<!-- ver00016 -->
+<!-- ver00001: えーけんいっきゅーとらい -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>せかいの こっき と しゅと クイズ ver00016</title>
+  <title>えーけんいっきゅーとらい ver00001</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     body {
       font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
-      background: #bae6fd;
+      background: #fdf2f8;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -27,11 +27,11 @@
       position: relative;
       border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
-      border: 8px solid #38bdf8;
+      box-shadow: 0 12px 35px rgba(244,63,94,0.15);
+      border: 8px solid #f472b6;
     }
     header {
-      background: #0284c7;
+      background: #db2777;
       color: white;
       display: flex;
       align-items: center;
@@ -45,8 +45,8 @@
     }
     .btn-header-back {
       background: #ffffff;
-      color: #0369a1;
-      border: 2px solid #bae6fd;
+      color: #db2777;
+      border: 2px solid #fbcfe8;
       padding: 4px 10px;
       border-radius: 12px;
       font-size: 13px;
@@ -65,7 +65,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 40%, #f0fdf4 100%);
+      background: linear-gradient(180deg, #fbcfe8 0%, #fdf2f8 40%, #fff1f2 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -76,36 +76,38 @@
       overflow: hidden;
     }
 
-    .bg-deco-sun {
+    /* 背景装飾（星・英語モチーフ） */
+    .bg-deco-star {
       position: absolute;
-      top: 8px;
-      left: 12px;
-      font-size: 38px;
+      top: 10px;
+      left: 14px;
+      font-size: 36px;
       animation: floatSlow 3s ease-in-out infinite alternate;
     }
-    .bg-deco-earth {
+    .bg-deco-book {
       position: absolute;
-      bottom: 68px;
-      left: 10px;
-      font-size: 38px;
+      bottom: 72px;
+      left: 12px;
+      font-size: 36px;
       animation: bounceSlow 2.5s ease-in-out infinite alternate;
     }
-    .bg-deco-compass {
+    .bg-deco-crown {
       position: absolute;
-      bottom: 68px;
-      right: 12px;
-      font-size: 36px;
+      bottom: 72px;
+      right: 14px;
+      font-size: 34px;
       animation: floatSlow 2.8s ease-in-out infinite alternate;
     }
     @keyframes floatSlow {
       0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-6px) rotate(5deg); }
+      100% { transform: translateY(-6px) rotate(6deg); }
     }
     @keyframes bounceSlow {
       0% { transform: scale(1); }
       100% { transform: scale(1.06) rotate(-4deg); }
     }
 
+    /* 虹のアーチ（SVG） */
     .rainbow-svg {
       position: absolute;
       top: 40px;
@@ -127,39 +129,41 @@
     .title-helper {
       font-size: 14px;
       font-weight: 900;
-      color: #0369a1;
+      color: #db2777;
       background: rgba(255,255,255,0.9);
-      padding: 2px 12px;
+      padding: 2px 14px;
       border-radius: 10px;
-      border: 2px solid #7dd3fc;
+      border: 2px solid #f472b6;
       margin-bottom: 3px;
     }
     .cover-title-badge {
       background: white;
-      border: 4px solid #38bdf8;
+      border: 4px solid #f472b6;
       border-radius: 20px;
-      padding: 4px 18px;
-      box-shadow: 0 5px 0 #0284c7, 0 8px 16px rgba(0,0,0,0.1);
+      padding: 6px 20px;
+      box-shadow: 0 5px 0 #db2777, 0 8px 16px rgba(219,39,119,0.15);
       text-align: center;
     }
     .cover-title {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
-      line-height: 1.25;
+      line-height: 1.2;
+      letter-spacing: 1px;
     }
-    .cover-title .c1 { color: #f43f5e; }
+    .cover-title .c1 { color: #e11d48; }
     .cover-title .c2 { color: #f59e0b; }
     .cover-title .c3 { color: #10b981; }
     .cover-title .c4 { color: #3b82f6; }
+    .cover-title .c5 { color: #8b5cf6; }
     
     .version-tag {
       font-size: 11px;
       font-weight: bold;
-      color: #64748b;
+      color: #9d174d;
       margin-top: 2px;
     }
 
-    /* 中央の男の子画像メインエリア */
+    /* 中央の女の子フレームエリア */
     .hero-center {
       position: relative;
       z-index: 2;
@@ -170,38 +174,32 @@
       justify-content: center;
       gap: 4px;
     }
-    .boy-frame {
+    .girl-frame {
       width: 130px;
       height: 130px;
       border-radius: 50%;
       border: 5px solid #ffffff;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.15), 0 0 0 4px #38bdf8;
+      box-shadow: 0 6px 14px rgba(219,39,119,0.2), 0 0 0 4px #f472b6;
       overflow: hidden;
-      background: #e0f2fe;
+      background: #fdf2f8;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .boy-img {
+    .girl-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .flags-row {
+    .icons-row {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      font-size: 22px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
-    }
-    .landmarks-row {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
+      gap: 12px;
       font-size: 22px;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
     }
 
+    /* 難易度（パート）選択ボックス */
     .diff-box {
       position: relative;
       z-index: 2;
@@ -215,12 +213,12 @@
     .diff-ribbon {
       font-size: 14px;
       font-weight: 900;
-      color: #0369a1;
+      color: #9d174d;
       background: white;
-      border: 3px solid #7dd3fc;
+      border: 3px solid #f472b6;
       padding: 3px 16px;
       border-radius: 18px;
-      box-shadow: 0 3px 0 #bae6fd;
+      box-shadow: 0 3px 0 #fbcfe8;
     }
     .diff-grid {
       display: grid;
@@ -232,9 +230,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       height: 48px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
       border-radius: 14px;
       cursor: pointer;
@@ -242,22 +240,21 @@
       color: white;
       transition: all 0.15s;
     }
-    .diff-easy {
+    .diff-l1 {
       background: linear-gradient(180deg, #4ade80, #16a34a);
       box-shadow: 0 4px 0 #15803d;
     }
-    .diff-normal {
+    .diff-l2 {
       background: linear-gradient(180deg, #38bdf8, #0284c7);
       box-shadow: 0 4px 0 #0369a1;
     }
-    .diff-hard {
+    .diff-l3 {
       background: linear-gradient(180deg, #f87171, #dc2626);
       box-shadow: 0 4px 0 #991b1b;
     }
-    .diff-expert {
-      background: linear-gradient(180deg, #facc15, #eab308);
-      box-shadow: 0 4px 0 #ca8a04;
-      color: #713f12;
+    .diff-l4 {
+      background: linear-gradient(180deg, #fbbf24, #d97706);
+      box-shadow: 0 4px 0 #b45309;
     }
     .diff-btn.active {
       transform: translateY(3px) scale(1.02);
@@ -269,10 +266,11 @@
       box-shadow: 0 1px 0 rgba(0,0,0,0.3);
     }
 
+    /* GOボタン */
     .btn-go {
       position: relative;
       z-index: 2;
-      background: linear-gradient(180deg, #fb923c, #ea580c);
+      background: linear-gradient(180deg, #fb7185, #e11d48);
       color: white;
       font-size: 42px;
       font-weight: 900;
@@ -281,7 +279,7 @@
       height: 64px;
       border-radius: 32px;
       border: 5px solid #ffffff;
-      box-shadow: 0 7px 0 #c2410c, 0 10px 18px rgba(0,0,0,0.2);
+      box-shadow: 0 7px 0 #9f1239, 0 10px 18px rgba(225,29,72,0.3);
       cursor: pointer;
       opacity: 0.5;
       pointer-events: none;
@@ -300,69 +298,79 @@
     }
     .btn-go:not(:disabled):active {
       transform: translateY(6px);
-      box-shadow: 0 2px 0 #c2410c;
+      box-shadow: 0 2px 0 #9f1239;
     }
 
+    /* 三つの黒星（黒丸）案内テキスト */
     .instruction {
       position: relative;
       z-index: 2;
       font-size: 11px;
       font-weight: bold;
-      color: #334155;
-      background: rgba(255,255,255,0.85);
-      padding: 3px 10px;
-      border-radius: 10px;
+      color: #475569;
+      background: rgba(255,255,255,0.9);
+      border: 1.5px solid #cbd5e1;
+      padding: 4px 12px;
+      border-radius: 12px;
       text-align: center;
+      line-height: 1.4;
+    }
+    .instruction .black-dots {
+      color: #0f172a;
+      font-size: 13px;
+      letter-spacing: 2px;
     }
 
-    /* === クイズ画面 === */
+    /* === クイズ画面（英単語仕様） === */
     #quiz-screen {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 14px;
-      gap: 8px;
-      background: #f0f9ff;
+      padding: 16px;
+      gap: 12px;
+      background: #fff5f5;
     }
-    .flag-card {
+    .word-card {
       width: 100%;
-      height: 180px;
+      min-height: 160px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: white;
-      border: 4px solid #bae6fd;
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border: 4px solid #fbcfe8;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(219,39,119,0.08);
+      gap: 8px;
     }
-    .flag-card img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .symbol-box {
-      font-size: 68px;
-      height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .name-box {
-      font-size: 21px;
+    .word-main {
+      font-size: 32px;
       font-weight: 900;
-      color: #0369a1;
-      background: #e0f2fe;
-      border: 3px solid #bae6fd;
-      padding: 6px 18px;
+      color: #881337;
+      letter-spacing: 0.5px;
+    }
+    .phonetic-text {
+      font-size: 16px;
+      color: #9f1239;
+      font-weight: bold;
+    }
+    .meaning-box {
+      font-size: 22px;
+      font-weight: 900;
+      color: #be123c;
+      background: #ffe4e6;
+      border: 3px solid #fecdd3;
+      padding: 10px 20px;
       border-radius: 30px;
       text-align: center;
-      min-height: 44px;
+      min-height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
     }
     .button-group {
       width: 100%;
@@ -404,7 +412,7 @@
     .status-box {
       font-size: 18px;
       font-weight: 900;
-      color: #0369a1;
+      color: #be123c;
       height: 26px;
     }
     #line-notice {
@@ -428,18 +436,18 @@
 
 <div id="app-container">
   <div id="line-notice">
-    ⚠️ 音を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
+    ⚠️ 音声を鳴らすため、画面右上の「…」を押して「Safari（またはChrome）で開く」を選んでね！
   </div>
 
   <header>
-    <span>せかいの こっき & しゅと</span>
+    <span>えーけんいっきゅーとらい</span>
     <button class="btn-header-back" onclick="returnToStart()">🏠 もどる</button>
   </header>
 
   <div id="start-screen">
-    <div class="bg-deco-sun">☀️</div>
-    <div class="bg-deco-earth">🌍</div>
-    <div class="bg-deco-compass">🧭</div>
+    <div class="bg-deco-star">✨</div>
+    <div class="bg-deco-book">📖</div>
+    <div class="bg-deco-crown">👑</div>
 
     <svg class="rainbow-svg" viewBox="0 0 400 120" fill="none">
       <path d="M 20 120 A 180 100 0 0 1 380 120" stroke="#f43f5e" stroke-width="8" stroke-linecap="round"/>
@@ -450,52 +458,53 @@
     </svg>
 
     <div class="title-area">
-      <div class="title-helper">ひらがな カタカナ</div>
+      <div class="title-helper">えいたんご & じゅくご</div>
       <div class="cover-title-badge">
         <h1 class="cover-title">
-          <span class="c1">せ</span><span class="c2">か</span><span class="c1">い</span><span class="c2">の</span>
-          <span class="c3">こ</span><span class="c4">っ</span><span class="c3">き</span><br>
-          <span class="c1">&</span> <span class="c2">し</span><span class="c1">ゅ</span><span class="c2">と</span>
-          <span class="c3">ク</span><span class="c4">イ</span><span class="c3">ズ</span>
+          <span class="c1">え</span><span class="c2">ー</span><span class="c1">け</span><span class="c2">ん</span><br>
+          <span class="c3">い</span><span class="c4">っ</span><span class="c3">き</span><span class="c4">ゅ</span><span class="c3">ー</span><br>
+          <span class="c5">と</span><span class="c1">ら</span><span class="c2">い</span>
         </h1>
       </div>
-      <div class="version-tag">ver00016</div>
+      <div class="version-tag">ver00001</div>
     </div>
 
-    <!-- 男の子画像メインフレーム -->
+    <!-- 女の子フレーム -->
     <div class="hero-center">
-      <div class="flags-row">
-        <span>🇺🇸</span><span>🇫🇷</span><span>🇯🇵</span><span>🇧🇷</span><span>🇬🇧</span>
+      <div class="icons-row">
+        <span>🅰️</span><span>🎓</span><span>🇬🇧</span><span>🇺🇸</span><span>🅱️</span>
       </div>
-      <div class="boy-frame">
-        <img src="boy.jpg" alt="キャラクター" class="boy-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>👦</text></svg>'">
+      <div class="girl-frame">
+        <img src="girl.jpg" alt="キャラクター" class="girl-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>👧</text></svg>'">
       </div>
-      <div class="landmarks-row">
-        <span>🗽</span><span>🗼</span><span>🐪</span><span>🏰</span><span>🏛️</span>
+      <div class="icons-row">
+        <span>📚</span><span>✒️</span><span>🏆</span><span>💡</span><span>🎯</span>
       </div>
     </div>
 
     <div class="diff-box">
-      <div class="diff-ribbon">むずかしさを えらんでね</div>
+      <div class="diff-ribbon">コースを えらんでね</div>
       <div class="diff-grid">
-        <button class="diff-btn diff-easy" onclick="selectDifficulty('easy', this)">かんたん ☀️</button>
-        <button class="diff-btn diff-normal" onclick="selectDifficulty('normal', this)">ふつう ☁️</button>
-        <button class="diff-btn diff-hard" onclick="selectDifficulty('hard', this)">むずかしい 🌋</button>
-        <button class="diff-btn diff-expert" onclick="selectDifficulty('expert', this)">ちょう難問 ⚡️</button>
+        <button class="diff-btn diff-l1" onclick="selectDifficulty('level1', this)">ランクA ☀️</button>
+        <button class="diff-btn diff-l2" onclick="selectDifficulty('level2', this)">ランクB ☁️</button>
+        <button class="diff-btn diff-l3" onclick="selectDifficulty('level3', this)">ランクC 🌋</button>
+        <button class="diff-btn diff-l4" onclick="selectDifficulty('level4', this)">じゅくご ⚡️</button>
       </div>
     </div>
 
     <button id="go-btn" class="btn-go" onclick="startGame()">GO</button>
     
     <div class="instruction">
-      黒い3点をタップし、デフォルトのブラウザで開くをタップして下さい。
+      <span class="black-dots">● ● ●</span> をタップし、デフォルトのブラウザで開いて下さい。
     </div>
   </div>
 
   <div id="quiz-screen">
-    <div class="flag-card"><img id="flag-img" src="" alt="国旗"></div>
-    <div class="symbol-box" id="symbol-emoji">🌸</div>
-    <div class="name-box" id="name-text">にほん / とうきょう</div>
+    <div class="word-card">
+      <div class="word-main" id="word-text">bolster</div>
+      <div class="phonetic-text" id="phonetic-text">/bóʊlstɚ/</div>
+    </div>
+    <div class="meaning-box" id="meaning-text">〜を強化する・支援する</div>
 
     <div class="button-group">
       <button id="btn-maru" class="btn-ans btn-maru" onclick="checkAnswer(true)">〇</button>
@@ -511,187 +520,42 @@ if (navigator.userAgent.indexOf('LINE') !== -1) {
   document.getElementById('line-notice').style.display = 'block';
 }
 
-const allCountries = [
-  // 🟦 かんたん (Level 1: 49カ国)
-  { code: "jp", country: "にほん", capital: "とうきょう", dispText: "にほん / とうきょう", emoji: "🌸", level: 1 },
-  { code: "us", country: "アメリカ", capital: "ワシントン", dispText: "アメリカ / ワシントン", emoji: "🗽", level: 1 },
-  { code: "cn", country: "チュウゴク", capital: "ペキン", dispText: "チュウゴク / ペキン", emoji: "🐼", level: 1 },
-  { code: "kr", country: "カンコク", capital: "ソウル", dispText: "カンコク / ソウル", emoji: "🍱", level: 1 },
-  { code: "kp", country: "キタチョウセン", capital: "ピョンヤン", dispText: "キタチョウセン / ピョンヤン", emoji: "🏛️", level: 1 },
-  { code: "ru", country: "ロシア", capital: "モスクワ", dispText: "ロシア / モスクワ", emoji: "🪆", level: 1 },
-  { code: "gb", country: "イギリス", capital: "ロンドン", dispText: "イギリス / ロンドン", emoji: "👑", level: 1 },
-  { code: "fr", country: "フランス", capital: "パリ", dispText: "フランス / パリ", emoji: "🗼", level: 1 },
-  { code: "de", country: "ドイツ", capital: "ベルリン", dispText: "ドイツ / ベルリン", emoji: "🏰", level: 1 },
-  { code: "it", country: "イタリア", capital: "ローマ", dispText: "イタリア / ローマ", emoji: "🍕", level: 1 },
-  { code: "es", country: "スペイン", capital: "マドリード", dispText: "スペイン / マドリード", emoji: "💃", level: 1 },
-  { code: "ca", country: "カナダ", capital: "オタワ", dispText: "カナダ / オタワ", emoji: "🍁", level: 1 },
-  { code: "au", country: "オーストラリア", capital: "キャンベラ", dispText: "オーストラリア / キャンベラ", emoji: "🐨", level: 1 },
-  { code: "br", country: "ブラジル", capital: "ブラジリア", dispText: "ブラジル / ブラジリア", emoji: "⚽", level: 1 },
-  { code: "ar", country: "アルゼンチン", capital: "ブエノスアイレス", dispText: "アルゼンチン / ブエノスアイレス", emoji: "🥩", level: 1 },
-  { code: "mx", country: "メキシコ", capital: "メキシコシティ", dispText: "メキシコ / メキシコシティ", emoji: "🌮", level: 1 },
-  { code: "in", country: "インド", capital: "ニューデリー", dispText: "インド / ニューデリー", emoji: "🐘", level: 1 },
-  { code: "th", country: "タイ", capital: "バンコク", dispText: "タイ / バンコク", emoji: "🐘", level: 1 },
-  { code: "ph", country: "フィリピン", capital: "マニラ", dispText: "フィリピン / マニラ", emoji: "🥭", level: 1 },
-  { code: "id", country: "インドネシア", capital: "ジャカルタ", dispText: "インドネシア / ジャカルタ", emoji: "🏝️", level: 1 },
-  { code: "sg", country: "シンガポール", capital: "シンガポール", dispText: "シンガポール / シンガポール", emoji: "🦁", level: 1 },
-  { code: "my", country: "マレーシア", capital: "クアラルンプール", dispText: "マレーシア / クアラルンプール", emoji: "🏙️", level: 1 },
-  { code: "vn", country: "ベトナム", capital: "ハノイ", dispText: "ベトナム / ハノイ", emoji: "🍜", level: 1 },
-  { code: "tr", country: "トルコ", capital: "アンカラ", dispText: "トルコ / アンカラ", emoji: "🥙", level: 1 },
-  { code: "sa", country: "サウジアラビア", capital: "リヤド", dispText: "サウジアラビア / リヤド", emoji: "🌴", level: 1 },
-  { code: "ae", country: "アラブしゅちょうこくれんぽう", capital: "アブダビ", dispText: "アラブしゅちょうこくれんぽう / アブダビ", emoji: "🏙️", level: 1 },
-  { code: "eg", country: "エジプト", capital: "カイロ", dispText: "エジプト / カイロ", emoji: "🐪", level: 1 },
-  { code: "za", country: "みなみアフリカ", capital: "プレトリア", dispText: "みなみアフリカ / プレトリア", emoji: "🦁", level: 1 },
-  { code: "ke", country: "ケニア", capital: "ナイロビ", dispText: "ケニア / ナイロビ", emoji: "🦒", level: 1 },
-  { code: "ng", country: "ナイジェリア", capital: "アブジャ", dispText: "ナイジェリア / アブジャ", emoji: "🦅", level: 1 },
-  { code: "se", country: "スウェーデン", capital: "ストックホルム", dispText: "スウェーデン / ストックホルム", emoji: "🌲", level: 1 },
-  { code: "no", country: "ノルウェー", capital: "オスロ", dispText: "ノルウェー / オスロ", emoji: "🏔️", level: 1 },
-  { code: "fi", country: "フィンランド", capital: "ヘルシンキ", dispText: "フィンランド / ヘルシンキ", emoji: "🎅", level: 1 },
-  { code: "dk", country: "デンマーク", capital: "コペンハーゲン", dispText: "デンマーク / コペンハーゲン", emoji: "🧜‍♀️", level: 1 },
-  { code: "nl", country: "オランダ", capital: "アムステルダム", dispText: "オランダ / アムステルダム", emoji: "🌷", level: 1 },
-  { code: "be", country: "ベルギー", capital: "ブリュッセル", dispText: "ベルギー / ブリュッセル", emoji: "🍫", level: 1 },
-  { code: "ch", country: "スイス", capital: "ベルン", dispText: "スイス / ベルン", emoji: "🧀", level: 1 },
-  { code: "at", country: "オーストリア", capital: "ウィーン", dispText: "オーストリア / ウィーン", emoji: "🎼", level: 1 },
-  { code: "pl", country: "ポーランド", capital: "ワルシャワ", dispText: "ポーランド / ワルシャワ", emoji: "🥟", level: 1 },
-  { code: "ua", country: "ウクライナ", capital: "キーウ", dispText: "ウクライナ / キーウ", emoji: "🌻", level: 1 },
-  { code: "il", country: "イスラエル", capital: "エルサレム", dispText: "イスラエル / エルサレム", emoji: "📜", level: 1 },
-  { code: "ir", country: "イラン", capital: "テヘラン", dispText: "イラン / テヘラン", emoji: "🏛️", level: 1 },
-  { code: "iq", country: "イラク", capital: "バグダッド", dispText: "イラク / バグダッド", emoji: "🕌", level: 1 },
-  { code: "pk", country: "パキスタン", capital: "イスラマバード", dispText: "パキスタン / イスラマバード", emoji: "🏏", level: 1 },
-  { code: "bd", country: "バングラデシュ", capital: "ダッカ", dispText: "バングラデシュ / ダッカ", emoji: "🐅", level: 1 },
-  { code: "nz", country: "ニュージーランド", capital: "ウェリントン", dispText: "ニュージーランド / ウェリントン", emoji: "🥝", level: 1 },
-  { code: "gr", country: "ギリシャ", capital: "アテネ", dispText: "ギリシャ / アテネ", emoji: "🏛️", level: 1 },
-  { code: "pt", country: "ポルトガル", capital: "リスボン", dispText: "ポルトガル / リスボン", emoji: "⛵", level: 1 },
-  { code: "hu", country: "ハンガリー", capital: "ブダペスト", dispText: "ハンガリー / ブダペスト", emoji: "🎻", level: 1 },
+// 英検1級 サンプル単語・熟語データ
+const allWords = [
+  // ランクA (最頻出)
+  { word: "bolster", phonetic: "/bóʊlstɚ/", meaning: "〜を強化する・支援する", level: 1 },
+  { word: "aberration", phonetic: "/ˌæb.əˈreɪ.ʃən/", meaning: "逸脱・変異・常軌を逸すること", level: 1 },
+  { word: "covert", phonetic: "/ˈkoʊ.vɚt/", meaning: "秘密の・隠された", level: 1 },
+  { word: "lucrative", phonetic: "/ˈluː.krə.tɪv/", meaning: "利益の上がる・儲かる", level: 1 },
+  { word: "mitigate", phonetic: "/ˈmɪt̬.ə.ɡeɪt/", meaning: "〜を和らげる・軽減する", level: 1 },
 
-  // 🟩 ふつう (Level 2: 42カ国)
-  { code: "cl", country: "チリ", capital: "サンティアゴ", dispText: "チリ / サンティアゴ", emoji: "🏔️", level: 2 },
-  { code: "pe", country: "ペルー", capital: "リマ", dispText: "ペルー / リマ", emoji: "🦙", level: 2 },
-  { code: "co", country: "コロンビア", capital: "ボゴタ", dispText: "コロンビア / ボゴタ", emoji: "☕", level: 2 },
-  { code: "ve", country: "ベネズエラ", capital: "カラカス", dispText: "ベネズエラ / カラカス", emoji: "💧", level: 2 },
-  { code: "cu", country: "キューバ", capital: "ハバナ", dispText: "キューバ / ハバナ", emoji: "🎺", level: 2 },
-  { code: "jm", country: "ジャマイカ", capital: "キングストン", dispText: "ジャマイカ / キングストン", emoji: "🏃", level: 2 },
-  { code: "ma", country: "モロッコ", capital: "ラバト", dispText: "モロッコ / ラバト", emoji: "🏺", level: 2 },
-  { code: "tn", country: "チュニジア", capital: "チュニス", dispText: "チュニジア / チュニス", emoji: "🏛️", level: 2 },
-  { code: "dz", country: "アルジェリア", capital: "アルジェ", dispText: "アルジェリア / アルジェ", emoji: "🏜️", level: 2 },
-  { code: "et", country: "エチオピア", capital: "アディスアベバ", dispText: "エチオピア / アディスアベバ", emoji: "☕", level: 2 },
-  { code: "tz", country: "タンザニア", capital: "ドドマ", dispText: "タンザニア / ドドマ", emoji: "🦁", level: 2 },
-  { code: "ug", country: "ウガンダ", capital: "カンパラ", dispText: "ウガンダ / カンパラ", emoji: "🦍", level: 2 },
-  { code: "gh", country: "ガーナ", capital: "アクラ", dispText: "ガーナ / アクラ", emoji: "🍫", level: 2 },
-  { code: "sn", country: "セネガル", capital: "ダカール", dispText: "セネガル / ダカール", emoji: "🦁", level: 2 },
-  { code: "qa", country: "カタール", capital: "ドーハ", dispText: "カタール / ドーハ", emoji: "⚽", level: 2 },
-  { code: "kw", country: "クウェート", capital: "クウェート", dispText: "クウェート / クウェート", emoji: "🛢️", level: 2 },
-  { code: "jo", country: "ヨルダン", capital: "アンマン", dispText: "ヨルダン / アンマン", emoji: "🏛️", level: 2 },
-  { code: "lb", country: "レバノン", capital: "ベイルート", dispText: "レバノン / ベイルート", emoji: "🌲", level: 2 },
-  { code: "sy", country: "シリア", capital: "ダマスカス", dispText: "シリア / ダマスカス", emoji: "🏛️", level: 2 },
-  { code: "af", country: "アフガニスタン", capital: "カブール", dispText: "アフガニスタン / カブール", emoji: "🏔️", level: 2 },
-  { code: "mm", country: "ミャンマー", capital: "ネピドー", dispText: "ミャンマー / ネピドー", emoji: "🛕", level: 2 },
-  { code: "kh", country: "カンボジア", capital: "プノンペン", dispText: "カンボジア / プノンペン", emoji: "🛕", level: 2 },
-  { code: "la", country: "ラオス", capital: "ビエンチャン", dispText: "ラオス / ビエンチャン", emoji: "🐘", level: 2 },
-  { code: "np", country: "ネパール", capital: "カトマンズ", dispText: "ネパール / カトマンズ", emoji: "🏔️", level: 2 },
-  { code: "lk", country: "スリランカ", capital: "スリジャヤワルダナプラコッテ", dispText: "スリランカ / スリジャヤワルダナプラコッテ", emoji: "🍵", level: 2 },
-  { code: "mn", country: "モンゴル", capital: "ウランバートル", dispText: "モンゴル / ウランバートル", emoji: "🐎", level: 2 },
-  { code: "kz", country: "カザフスタン", capital: "アスタナ", dispText: "カザフスタン / アスタナ", emoji: "🦅", level: 2 },
-  { code: "uz", country: "ウズベキスタン", capital: "タシュケント", dispText: "ウズベキスタン / タシュケント", emoji: "🕌", level: 2 },
-  { code: "cz", country: "チェコ", capital: "プラハ", dispText: "チェコ / プラハ", emoji: "🏰", level: 2 },
-  { code: "sk", country: "スロバキア", capital: "ブラチスラバ", dispText: "スロバキア / ブラチスラバ", emoji: "🏰", level: 2 },
-  { code: "ro", country: "ルーマニア", capital: "ブカレスト", dispText: "ルーマニア / ブカレスト", emoji: "🧛", level: 2 },
-  { code: "bg", country: "ブルガリア", capital: "ソフィア", dispText: "ブルガリア / ソフィア", emoji: "🥣", level: 2 },
-  { code: "hr", country: "クロアチア", capital: "ザグレブ", dispText: "クロアチア / ザグレブ", emoji: "⚽", level: 2 },
-  { code: "rs", country: "セルビア", capital: "ベオグラード", dispText: "セルビア / ベオグラード", emoji: "🇷🇸", level: 2 },
-  { code: "si", country: "スロベニア", capital: "リュブリャナ", dispText: "スロベニア / リュブリャナ", emoji: "🏔️", level: 2 },
-  { code: "lt", country: "リトアニア", capital: "ビリニュス", dispText: "リトアニア / ビリニュス", emoji: "🌲", level: 2 },
-  { code: "lv", country: "ラトビア", capital: "リガ", dispText: "ラトビア / リガ", emoji: "🏰", level: 2 },
-  { code: "ee", country: "エストニア", capital: "タリン", dispText: "エストニア / タリン", emoji: "💻", level: 2 },
-  { code: "is", country: "アイスランド", capital: "レイキャビク", dispText: "アイスランド / レイキャビク", emoji: "🌋", level: 2 },
-  { code: "ie", country: "アイルランド", capital: "ダブリン", dispText: "アイルランド / ダブリン", emoji: "🍀", level: 2 },
-  { code: "lu", country: "ルクセンブルク", capital: "ルクセンブルク", dispText: "ルクセンブルク / ルクセンブルク", emoji: "🏰", level: 2 },
-  { code: "mt", country: "マルタ", capital: "バレッタ", dispText: "マルタ / バレッタ", emoji: "🏝️", level: 2 },
+  // ランクB (重要)
+  { word: "ephemeral", phonetic: "/ɪˈfem.ɚ.əl/", meaning: "つかの間の・はかない", level: 2 },
+  { word: "garrulous", phonetic: "/ˈɡær.əl.əs/", meaning: "おしゃべりな・多弁な", level: 2 },
+  { word: "discombobulate", phonetic: "/ˌdɪs.kəmˈbɑː.bjə.leɪt/", meaning: "〜を混乱させる・当惑させる", level: 2 },
+  { word: "meticulous", phonetic: "/məˈtɪk.jə.ləs/", meaning: "極めて細やかな・綿密な", level: 2 },
+  { word: "ubiquitous", phonetic: "/juːˈbɪk.wə.t̬əs/", meaning: "至る所にある・遍在する", level: 2 },
 
-  // 🟧 むずかしい (Level 3: 40カ国)
-  { code: "bo", country: "ボリビア", capital: "スクレ", dispText: "ボリビア / スクレ", emoji: "🦩", level: 3 },
-  { code: "py", country: "パラグアイ", capital: "アスンシオン", dispText: "パラグアイ / アスンシオン", emoji: "🌿", level: 3 },
-  { code: "uy", country: "ウルグアイ", capital: "モンテビデオ", dispText: "ウルグアイ / モンテビデオ", emoji: "⚽", level: 3 },
-  { code: "sd", country: "スーダン", capital: "ハルツーム", dispText: "スーダン / ハルツーム", emoji: "🏜️", level: 3 },
-  { code: "ss", country: "みなみスーダン", capital: "ジュバ", dispText: "みなみスーダン / ジュバ", emoji: "🦅", level: 3 },
-  { code: "mg", country: "マダガスカル", capital: "アンタナナリボ", dispText: "マダガスカル / アンタナナリボ", emoji: "🐒", level: 3 },
-  { code: "zm", country: "ザンビア", capital: "ルサカ", dispText: "ザンビア / ルサカ", emoji: "🌊", level: 3 },
-  { code: "zw", country: "ジンバブエ", capital: "ハラレ", dispText: "ジンバブエ / ハラレ", emoji: "🪨", level: 3 },
-  { code: "bw", country: "ボツワナ", capital: "ハボローネ", dispText: "ボツワナ / ハボローネ", emoji: "💎", level: 3 },
-  { code: "na", country: "ナミビア", capital: "ウィントフック", dispText: "ナミビア / ウィントフック", emoji: "🏜️", level: 3 },
-  { code: "mr", country: "モーリタニア", capital: "ヌアクショット", dispText: "モーリタニア / ナアクショット", emoji: "🏜️", level: 3 },
-  { code: "ne", country: "ニジェール", capital: "ニアメ", dispText: "ニジェール / ニアメ", emoji: "🦒", level: 3 },
-  { code: "td", country: "チャド", capital: "ンジャメナ", dispText: "チャド / ンジャメナ", emoji: "🐪", level: 3 },
-  { code: "bf", country: "ブルキナファソ", capital: "ワガドゥグー", dispText: "ブルキナファソ / ワガドゥグー", emoji: "🐎", level: 3 },
-  { code: "tg", country: "トーゴ", capital: "ロメ", dispText: "トーゴ / ロメ", emoji: "🌴", level: 3 },
-  { code: "bj", country: "ベナン", capital: "ポルトノボ", dispText: "ベナン / ポルトノボ", emoji: "🎭", level: 3 },
-  { code: "rw", country: "ルワンダ", capital: "キガリ", dispText: "ルワンダ / キガリ", emoji: "🦍", level: 3 },
-  { code: "bi", country: "ブルンジ", capital: "ギテガ", dispText: "ブルンジ / ギテガ", emoji: "🥁", level: 3 },
-  { code: "mw", country: "マラウイ", capital: "リロングウェ", dispText: "マラウイ / リロングウェ", emoji: "🐟", level: 3 },
-  { code: "mz", country: "モザンビーク", capital: "マプト", dispText: "モザンビーク / マプト", emoji: "🏝️", level: 3 },
-  { code: "ao", country: "アンゴラ", capital: "ルアンダ", dispText: "アンゴラ / ルアンダ", emoji: "🛢️", level: 3 },
-  { code: "cg", country: "コンゴきょうわこく", capital: "ブラザビル", dispText: "コンゴきょうわこく / ブラザビル", emoji: "🌳", level: 3 },
-  { code: "cd", country: "コンゴみんしゅきょうわこく", capital: "キンシャサ", dispText: "コンゴみんしゅきょうわこく / キンシャサ", emoji: "🦧", level: 3 },
-  { code: "ga", country: "ガボン", capital: "リーブルビル", dispText: "ガボン / リーブルビル", emoji: "🦧", level: 3 },
-  { code: "gq", country: "せきどうギニア", capital: "マラボ", dispText: "せきどうギニア / マラボ", emoji: "🌴", level: 3 },
-  { code: "er", country: "エリトリア", capital: "アスマラ", dispText: "エリトリア / アスマラ", emoji: "🐪", level: 3 },
-  { code: "cm", country: "カメルーン", capital: "ヤウンデ", dispText: "カメルーン / ヤウンデ", emoji: "🦁", level: 3 },
-  { code: "cf", country: "ちゅうおうアフリカ", capital: "バンギ", dispText: "ちゅうおうアフリカ / バンギ", emoji: "🐘", level: 3 },
-  { code: "sl", country: "シエラレオネ", capital: "フリータウン", dispText: "シエラレオネ / フリータウン", emoji: "💎", level: 3 },
-  { code: "lr", country: "リベリア", capital: "モンロビア", dispText: "リベリア / モンロビア", emoji: "🚢", level: 3 },
-  { code: "gn", country: "ギニア", capital: "コナクリ", dispText: "ギニア / コナクリ", emoji: "⛰️", level: 3 },
-  { code: "gw", country: "ギニアビサウ", capital: "ビサウ", dispText: "ギニアビサウ / ビサウ", emoji: "🌾", level: 3 },
-  { code: "gm", country: "ガンビア", capital: "バンジュール", dispText: "ガンビア / バンジュール", emoji: "🌊", level: 3 },
-  { code: "sb", country: "ソロモンしょとう", capital: "ホニアラ", dispText: "ソロモンしょとう / ホニアラ", emoji: "🏝️", level: 3 },
-  { code: "fj", country: "フィジー", capital: "スバ", dispText: "フィジー / スバ", emoji: "🌴", level: 3 },
-  { code: "pg", country: "パプアニューギニア", capital: "ポートモレスビー", dispText: "パプアニューギニア / ポートモレスビー", emoji: "🦜", level: 3 },
-  { code: "ws", country: "サモア", capital: "アピア", dispText: "サモア / アピア", emoji: "🥥", level: 3 },
-  { code: "to", country: "トンガ", capital: "ヌクアロファ", dispText: "トンガ / ヌクアロファ", emoji: "🐋", level: 3 },
-  { code: "ki", country: "キリバス", capital: "タラワ", dispText: "キリバス / タラワ", emoji: "🦀", level: 3 },
-  { code: "vu", country: "バヌアツ", capital: "ポートビラ", dispText: "バヌアツ / ポートビラ", emoji: "🌋", level: 3 },
+  // ランクC (超難関)
+  { word: "intransigent", phonetic: "/ɪnˈtræn.sə.dʒənt/", meaning: "妥協しない・頑固な", level: 3 },
+  { word: "pusillanimous", phonetic: "/ˌpjuː.səˈlæn.ə.məs/", meaning: "臆病な・小心な", level: 3 },
+  { word: "quagmire", phonetic: "/ˈkwæɡ.maɪ.ɚ/", meaning: "泥沼・苦境・窮地", level: 3 },
+  { word: "obsequious", phonetic: "/əbˈsiː.kwi.əs/", meaning: "こびへつらう・卑屈な", level: 3 },
+  { word: "sycophant", phonetic: "/ˈsɪk.ə.fænt/", meaning: "へつらい者・おべっか使い", level: 3 },
 
-  // 🟥 ちょう難問 (Level 4: 33カ国)
-  { code: "km", country: "コモロ", capital: "モロニ", dispText: "コモロ / モロニ", emoji: "🏝️", level: 4 },
-  { code: "sc", country: "セーシェル", capital: "ビクトリア", dispText: "セーシェル / ビクトリア", emoji: "🐢", level: 4 },
-  { code: "mu", country: "モーリシャス", capital: "ポートルイス", dispText: "モーリシャス / ポートルイス", emoji: "🦤", level: 4 },
-  { code: "cv", country: "カーボベルデ", capital: "プライア", dispText: "カーボベルデ / プライア", emoji: "🏝️", level: 4 },
-  { code: "st", country: "サントメ・プリンシペ", capital: "サントメ", dispText: "サントメ・プリンシペ / サントメ", emoji: "🍫", level: 4 },
-  { code: "ls", country: "レソト", capital: "マセル", dispText: "レソト / マセル", emoji: "🏔️", level: 4 },
-  { code: "sz", country: "エスワティニ", capital: "ムババーネ", dispText: "エスワティニ / ムババーネ", emoji: "🛡️", level: 4 },
-  { code: "dj", country: "ジブチ", capital: "ジブチ", dispText: "ジブチ / ジブチ", emoji: "⛵", level: 4 },
-  { code: "tm", country: "トルクメニスタン", capital: "アシガバート", dispText: "トルクメニスタン / アシガバート", emoji: "🔥", level: 4 },
-  { code: "tj", country: "タジキスタン", capital: "ドゥシャンベ", dispText: "タジキスタン / ドゥシャンベ", emoji: "🏔️", level: 4 },
-  { code: "kg", country: "キルギス", capital: "ビシュケク", dispText: "キルギス / ビシュケク", emoji: "🐎", level: 4 },
-  { code: "am", country: "アルメニア", capital: "エレバン", dispText: "アルメニア / エレバン", emoji: "🏛️", level: 4 },
-  { code: "az", country: "アゼルバイジャン", capital: "バクー", dispText: "アゼルバイジャン / バクー", emoji: "🔥", level: 4 },
-  { code: "ge", country: "ジョージア", capital: "トビリシ", dispText: "ジョージア / トビリシ", emoji: "🍷", level: 4 },
-  { code: "md", country: "モルドバ", capital: "キシナウ", dispText: "モルドバ / キシナウ", emoji: "🍇", level: 4 },
-  { code: "by", country: "ベラルーシ", capital: "ミンスク", dispText: "ベラルーシ / ミンスク", emoji: "🌲", level: 4 },
-  { code: "sm", country: "サンマリノ", capital: "サンマリノ", dispText: "サンマリノ / サンマリノ", emoji: "🏰", level: 4 },
-  { code: "ad", country: "アンドラ", capital: "アンドララベリャ", dispText: "アンドラ / アンドララベリャ", emoji: "🏔️", level: 4 },
-  { code: "li", country: "リヒテンシュタイン", capital: "ファドゥーツ", dispText: "リヒテンシュタイン / ファドゥーツ", emoji: "🏰", level: 4 },
-  { code: "mc", country: "モナコ", capital: "モナコ", dispText: "モナコ / モナコ", emoji: "🏎️", level: 4 },
-  { code: "bh", country: "バーレーン", capital: "マナマ", dispText: "バーレーン / マナマ", emoji: "🏎️", level: 4 },
-  { code: "bn", country: "ブルネイ", capital: "バンダルスリブガワン", dispText: "ブルネイ / バンダルスリブガワン", emoji: "🕌", level: 4 },
-  { code: "tl", country: "ひがしティモール", capital: "ディリ", dispText: "ひがしティモール / ディリ", emoji: "🐊", level: 4 },
-  { code: "bb", country: "バルバドス", capital: "ブリッジタウン", dispText: "バルバドス / ブリッジタウン", emoji: "🌴", level: 4 },
-  { code: "lc", country: "セントルシア", capital: "カストリーズ", dispText: "セントルシア / カストリーズ", emoji: "⛰️", level: 4 },
-  { code: "vc", country: "セントビンセント", capital: "キングスタウン", dispText: "セントビンセント / キングスタウン", emoji: "⛵", level: 4 },
-  { code: "ag", country: "アンティグア・バーブーダ", capital: "セントジョンズ", dispText: "アンティグア・バーブーダ / セントジョンズ", emoji: "🏖️", level: 4 },
-  { code: "dm", country: "ドミニカこく", capital: "ロソー", dispText: "ドミニカこく / ロソー", emoji: "🦜", level: 4 },
-  { code: "gd", country: "グレナダ", capital: "セントジョージズ", dispText: "グレナダ / セントジョージズ", emoji: "🏝️", level: 4 },
-  { code: "bz", country: "ベリーズ", capital: "ベルモパン", dispText: "ベリーズ / ベルモパン", emoji: "🐠", level: 4 },
-  { code: "sr", country: "スリナム", capital: "パラマリボ", dispText: "スリナム / パラマリボ", emoji: "🌳", level: 4 },
-  { code: "gy", country: "ガイアナ", capital: "ジョージタウン", dispText: "ガイアナ / ジョージタウン", emoji: "🐆", level: 4 },
-  { code: "ly", country: "リビア", capital: "トリポリ", dispText: "リビア / トリポリ", emoji: "🏜️", level: 4 },
-  { code: "ye", country: "イエメン", capital: "サナア", dispText: "イエメン / サナア", emoji: "🏰", level: 4 },
-  { code: "om", country: "オマーン", capital: "マスカット", dispText: "オマーン / マスカット", emoji: "⛵", level: 4 }
+  // 熟語・句動詞
+  { word: "peter out", phonetic: "/ˈpiː.t̬ɚ aʊt/", meaning: "次第に衰退する・消滅する", level: 4 },
+  { word: "chalk up to", phonetic: "/tʃɑːk ʌp tuː/", meaning: "〜のせいにする・〜の結果とみなす", level: 4 },
+  { word: "gloss over", phonetic: "/ɡlɑːs ˈoʊ.vɚ/", meaning: "〜をごまかす・体裁をつくろう", level: 4 },
+  { word: "shore up", phonetic: "/ʃɔːr ʌp/", meaning: "〜を強化する・支える", level: 4 },
+  { word: "single out", phonetic: "/ˈsɪŋ.ɡəl aʊt/", meaning: "〜を選び出す・名指しする", level: 4 }
 ];
 
 let selectedLevel = null;
-let currentCountries = [];
+let currentWords = [];
 let questionDeck = [];
-let lastTargetCode = null;
-let lastSpokenCode = null;
+let lastTargetWord = null;
+let lastSpokenMeaning = null;
 let consecutiveCount = 0;
 let lastTypeIsCorrect = null;
 let currentQuestion = null;
@@ -700,9 +564,9 @@ let audioCtx = null;
 
 const mapBtns = document.querySelectorAll('.diff-btn');
 const goBtn = document.getElementById('go-btn');
-const flagImg = document.getElementById('flag-img');
-const symbolEmoji = document.getElementById('symbol-emoji');
-const nameText = document.getElementById('name-text');
+const wordText = document.getElementById('word-text');
+const phoneticText = document.getElementById('phonetic-text');
+const meaningText = document.getElementById('meaning-text');
 const statusText = document.getElementById('status-text');
 const maruBtn = document.getElementById('btn-maru');
 const batsuBtn = document.getElementById('btn-batsu');
@@ -724,36 +588,23 @@ function shuffle(array) {
 
 function selectDifficulty(diff, btn) {
   selectedLevel = diff;
-  localStorage.setItem('quiz_kokki_diff', diff);
-
   mapBtns.forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-
   goBtn.classList.add('ready');
 
-  let maxLevel = 1;
-  if (diff === 'easy') maxLevel = 1;
-  else if (diff === 'normal') maxLevel = 2;
-  else if (diff === 'hard') maxLevel = 3;
-  else if (diff === 'expert') maxLevel = 4;
+  let lvl = 1;
+  if (diff === 'level1') lvl = 1;
+  else if (diff === 'level2') lvl = 2;
+  else if (diff === 'level3') lvl = 3;
+  else if (diff === 'level4') lvl = 4;
 
-  currentCountries = allCountries.filter(c => c.level <= maxLevel);
-  questionDeck = shuffle(currentCountries);
-  lastTargetCode = null;
-  lastSpokenCode = null;
+  currentWords = allWords.filter(w => w.level === lvl);
+  questionDeck = shuffle(currentWords);
+  lastTargetWord = null;
+  lastSpokenMeaning = null;
   consecutiveCount = 0;
   lastTypeIsCorrect = null;
 }
-
-window.onload = function() {
-  const saved = localStorage.getItem('quiz_kokki_diff');
-  if (saved) {
-    const map = { 'easy': 0, 'normal': 1, 'hard': 2, 'expert': 3 };
-    if (mapBtns[map[saved]]) {
-      selectDifficulty(saved, mapBtns[map[saved]]);
-    }
-  }
-};
 
 function playSound(type) {
   try {
@@ -803,25 +654,25 @@ function nextQuestion() {
   statusText.innerText = "👉 〇 か ✕ を おしてね！";
 
   if (questionDeck.length === 0) {
-    questionDeck = shuffle(currentCountries);
+    questionDeck = shuffle(currentWords);
   }
 
   const mustBeTrue = (consecutiveCount >= 3 && !lastTypeIsCorrect);
   const mustBeFalse = (consecutiveCount >= 3 && lastTypeIsCorrect);
 
-  let excludedTargets = new Set();
-  if (lastTargetCode) excludedTargets.add(lastTargetCode);
-  if (mustBeTrue && lastSpokenCode) excludedTargets.add(lastSpokenCode);
+  let excluded = new Set();
+  if (lastTargetWord) excluded.add(lastTargetWord);
+  if (mustBeTrue && lastSpokenMeaning) excluded.add(lastSpokenMeaning);
 
   let candidates = [];
   for (let i = 0; i < questionDeck.length; i++) {
-    if (!excludedTargets.has(questionDeck[i].code)) {
+    if (!excluded.has(questionDeck[i].word)) {
       candidates.push(i);
     }
   }
   if (candidates.length === 0) {
     for (let i = 0; i < questionDeck.length; i++) {
-      if (questionDeck[i].code !== lastTargetCode) {
+      if (questionDeck[i].word !== lastTargetWord) {
         candidates.push(i);
       }
     }
@@ -829,14 +680,14 @@ function nextQuestion() {
   if (candidates.length === 0) candidates = [0];
   
   const chosenIdx = candidates[Math.floor(Math.random() * candidates.length)];
-  const targetCountry = questionDeck.splice(chosenIdx, 1)[0];
+  const targetWordObj = questionDeck.splice(chosenIdx, 1)[0];
 
   let isCorrectPair;
   if (mustBeTrue) {
-    isCorrectPair = (targetCountry.code !== lastSpokenCode);
+    isCorrectPair = (targetWordObj.meaning !== lastSpokenMeaning);
   } else if (mustBeFalse) {
     isCorrectPair = false;
-  } else if (targetCountry.code === lastSpokenCode) {
+  } else if (targetWordObj.meaning === lastSpokenMeaning) {
     isCorrectPair = false;
   } else {
     isCorrectPair = Math.random() < 0.5;
@@ -849,41 +700,40 @@ function nextQuestion() {
     consecutiveCount = 1;
   }
 
-  let questionContent;
+  let meaningContent;
   if (isCorrectPair) {
-    questionContent = targetCountry;
+    meaningContent = targetWordObj;
   } else {
-    let availableSpeech = currentCountries.filter(c => c.code !== targetCountry.code && c.code !== lastSpokenCode);
-    if (availableSpeech.length === 0) {
-      availableSpeech = currentCountries.filter(c => c.code !== targetCountry.code);
+    let available = currentWords.filter(w => w.word !== targetWordObj.word && w.meaning !== lastSpokenMeaning);
+    if (available.length === 0) {
+      available = currentWords.filter(w => w.word !== targetWordObj.word);
     }
-    questionContent = availableSpeech[Math.floor(Math.random() * availableSpeech.length)];
+    meaningContent = available[Math.floor(Math.random() * available.length)];
   }
 
-  lastTargetCode = targetCountry.code;
-  lastSpokenCode = questionContent.code;
+  lastTargetWord = targetWordObj.word;
+  lastSpokenMeaning = meaningContent.meaning;
 
   currentQuestion = {
-    target: targetCountry,
+    target: targetWordObj,
     isCorrect: isCorrectPair,
-    speechText: questionContent.country + "、" + questionContent.capital,
-    dispText: questionContent.dispText,
-    emoji: questionContent.emoji
+    meaning: meaningContent.meaning
   };
 
-  flagImg.src = "https://flagcdn.com/w320/" + targetCountry.code + ".png";
-  symbolEmoji.innerText = currentQuestion.emoji;
-  nameText.innerText = currentQuestion.dispText;
+  wordText.innerText = targetWordObj.word;
+  phoneticText.innerText = targetWordObj.phonetic;
+  meaningText.innerText = meaningContent.meaning;
 
-  speakText(currentQuestion.speechText);
+  // 英単語の発音（英語ネイティブ音声 en-US）
+  speakEnglish(targetWordObj.word);
 }
 
-function speakText(text) {
+function speakEnglish(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel(); 
   const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'ja-JP';
-  utter.rate = 1.0;
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
   window.speechSynthesis.speak(utter);
 }
 
@@ -897,10 +747,10 @@ function checkAnswer(userChoice) {
 
   const isUserRight = (userChoice === currentQuestion.isCorrect);
   if (isUserRight) {
-    statusText.innerText = "⭕ せいかい！";
+    statusText.innerText = "⭕ せいかい！ (Correct!)";
     playSound('correct');
   } else {
-    statusText.innerText = "❌ ざんねん！";
+    statusText.innerText = "❌ ざんねん！ (Wrong!)";
     playSound('wrong');
   }
   setTimeout(nextQuestion, 800); 
